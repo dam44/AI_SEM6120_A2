@@ -34,5 +34,10 @@ namespace TSPModel
         {
             return this.y;
         }
+
+        int IData.id()
+        {
+            return this.id;
+        }
     }
 }

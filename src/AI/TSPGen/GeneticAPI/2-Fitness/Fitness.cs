@@ -16,7 +16,7 @@ namespace GeneticAPI
             return Math.Sqrt((li_hord * li_hord) + (li_verd * li_verd));
         }
 
-        public static double EvaluateTotal(List<DataWrapper<T>> ao_order)
+        public static double EvaluateTotal(List<Gene<T>> ao_order)
         {
             double ld_totalfitness = 0;
             for(int i = 0; i< ao_order.Count - 1; i++)

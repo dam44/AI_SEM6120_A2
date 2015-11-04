@@ -11,5 +11,6 @@ namespace GeneticAPI
 
         int x();
         int y();
+        int id();
     }
 }

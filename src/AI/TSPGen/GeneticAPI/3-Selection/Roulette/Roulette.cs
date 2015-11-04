@@ -9,11 +9,9 @@ namespace GeneticAPI.Selection.Roulette
     public class Roulette<T> : Selector<T> where T : IData
     {
         private double id_totalfitness;
-        private Random rand;
-        public Roulette(List<Individual<T>> ao_individuals) : base(ao_individuals)
+        public Roulette(List<Chromosome<T>> ao_individuals) : base(ao_individuals)
         {
             this.id_totalfitness = FindTotalFitness();
-            this.rand = new Random();
         }
         public double FindTotalFitness()
         {
@@ -25,7 +23,7 @@ namespace GeneticAPI.Selection.Roulette
             return ld_totalfitness;
         }
 
-        public double FindIndividualPercentage(Individual<T> ao_individual)
+        public double FindIndividualPercentage(Chromosome<T> ao_individual)
         {
             return (100 / id_totalfitness) * ao_individual.fitness;
         }
@@ -41,10 +39,10 @@ namespace GeneticAPI.Selection.Roulette
             return ld_percentages;
         }
 
-        public override Individual<T> MakeSelection()
+        public override Chromosome<T> MakeSelection()
         {
             List<double> ld_percentages = GeneratePercentageList();
-            int li_arrow = rand.Next(0, 100);
+            int li_arrow = Globals<T>.RAND.Next(0, 100);
             bool stop = false;
             int count = 0;
 

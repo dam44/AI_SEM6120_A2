@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI
 {
-    public class DataWrapper<T>
+    public class Gene<T>
     {
         public T data { get; set; }
 
-        public DataWrapper()
+        public Gene()
         {
         }
 
-        public DataWrapper(T ao_data)
+        public Gene(T ao_data)
         {
             this.data = ao_data;
         }

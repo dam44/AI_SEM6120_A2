@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI
 {
-    public class InitialIndividualFactory<T> where T : IData
+    public class InitialChromosomeFactory<T> where T : IData
     {
         private static Random RAND = new Random();
         private static readonly object io_syncLock = new object();
-        public static Individual<T> GenerateIndividual()
+        public static Chromosome<T> GenerateChromosome()
         {
-            List<DataWrapper<T>> lo_order = CreateOrder();
-            return CreateIndividual(lo_order);
+            List<Gene<T>> lo_order = CreateOrder();
+            return CreateChromosome(lo_order);
 
         }
 
-        private static List<DataWrapper<T>> CreateOrder()
+        private static List<Gene<T>> CreateOrder()
         {
-            List<DataWrapper<T>> lo_order = new List<DataWrapper<T>>();
+            List<Gene<T>> lo_order = new List<Gene<T>>();
             List<int> lo_datakeys = new List<int>();
             for (int i = 0; i < Globals<T>.DATA.Count; i++)
             {
@@ -39,9 +39,9 @@ namespace GeneticAPI
             return lo_order;
         }
 
-        private static Individual<T> CreateIndividual(List<DataWrapper<T>> ao_order)
+        private static Chromosome<T> CreateChromosome(List<Gene<T>> ao_order)
         {
-            return new Individual<T>(ao_order, Fitness<T>.EvaluateTotal(ao_order));
+            return new Chromosome<T>(ao_order, Fitness<T>.EvaluateTotal(ao_order));
         }
 
     }
