@@ -43,27 +43,34 @@ namespace GeneticAPI.Selection.Roulette
         {
             List<double> ld_percentages = GeneratePercentageList();
             int li_arrow = Globals<T>.RAND.Next(0, 100);
-            bool stop = false;
-            int count = 0;
-
-            while(!stop)
+            bool lb_stop = false;
+            int li_count = 0;
+            double ld_percsofar = 0;
+            while(!lb_stop)
             {
-                if (count == 0)
+                ld_percsofar += ld_percentages[li_count];
+                if (li_count == 0)
                 {
-                    if (li_arrow < ld_percentages[count])
+                    if (li_arrow < ld_percsofar)
                     {
-                        stop = true;
+                        lb_stop = true;
+                    } else
+                    {
+                        li_count++;
                     }
                 } else
                 {
-                    if (li_arrow > ld_percentages[count-1] && li_arrow < ld_percentages[count])
+                    if (li_arrow > (ld_percsofar - ld_percentages[li_count]) && li_arrow < ld_percsofar)
                     {
-                        stop = true;
+                        lb_stop = true;
+                    } else
+                    {
+                        li_count++;
                     }
                 }
 
             }
-            return io_individuals[count];
+            return io_individuals[li_count];
         }
     }
 }

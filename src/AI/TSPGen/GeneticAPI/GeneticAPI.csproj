@@ -49,6 +49,7 @@
     <Compile Include="4-Recombination\Crossover\PMX\CrossoverPMX.cs" />
     <Compile Include="5-Modification\Modification.cs" />
     <Compile Include="5-Modification\Mutation\PMX\MutationPMX.cs" />
+    <Compile Include="Events\APIEventArgs.cs" />
     <Compile Include="Shared\Globals.cs" />
     <Compile Include="1-Initialization\Data\IData.cs" />
     <Compile Include="1-Initialization\Data\Gene.cs" />
