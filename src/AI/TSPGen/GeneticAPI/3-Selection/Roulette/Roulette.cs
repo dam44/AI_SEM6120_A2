@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeneticAPI.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +9,10 @@ namespace GeneticAPI.Selection.Roulette
 {
     public class Roulette<T> : Selector<T> where T : IData
     {
-        private double id_totalfitness;
-        public Roulette(List<Chromosome<T>> ao_individuals) : base(ao_individuals)
+        NotableChromosomes<T> io_notablechroms;
+        public Roulette(List<Chromosome<T>> ao_individuals, NotableChromosomes<T> ao_notablechroms = null) : base(ao_individuals)
         {
-            this.id_totalfitness = FindTotalFitness();
-        }
-        public double FindTotalFitness()
-        {
-            double ld_totalfitness = 0;
-            for (int i = 0; i< this.io_individuals.Count; i++)
-            {
-                ld_totalfitness += this.io_individuals[i].fitness;
-            }
-            return ld_totalfitness;
+            io_notablechroms = ao_notablechroms;
         }
 
         public double FindIndividualPercentage(Chromosome<T> ao_individual)
@@ -49,8 +41,6 @@ namespace GeneticAPI.Selection.Roulette
             while(!lb_stop)
             {
                 ld_percsofar += ld_percentages[li_count];
-                if (li_count == 0)
-                {
                     if (li_arrow < ld_percsofar)
                     {
                         lb_stop = true;
@@ -58,16 +48,6 @@ namespace GeneticAPI.Selection.Roulette
                     {
                         li_count++;
                     }
-                } else
-                {
-                    if (li_arrow > (ld_percsofar - ld_percentages[li_count]) && li_arrow < ld_percsofar)
-                    {
-                        lb_stop = true;
-                    } else
-                    {
-                        li_count++;
-                    }
-                }
 
             }
             return io_individuals[li_count];

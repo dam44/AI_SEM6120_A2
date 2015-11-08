@@ -10,8 +10,8 @@ namespace GeneticAPI
     {
         public static double Evaluate(T ao_ind1, T ao_ind2)
         {
-            int li_hord = ao_ind1.x() - ao_ind2.x();
-            int li_verd = ao_ind1.y() - ao_ind2.y();
+            int li_hord = ao_ind2.x() - ao_ind1.x();
+            int li_verd = ao_ind2.y() - ao_ind1.y();
 
             return Math.Sqrt((li_hord * li_hord) + (li_verd * li_verd));
         }

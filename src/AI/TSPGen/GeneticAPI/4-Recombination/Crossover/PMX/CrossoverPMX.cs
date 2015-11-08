@@ -10,7 +10,9 @@ namespace GeneticAPI._4_Recombination
     {
         public override Chromosome<T>[] GenerateChildren(Chromosome<T>[] ao_parents)
         {
-            int li_crosspoint = Globals<T>.RAND.Next(ao_parents[0].GetOrder().Count);
+            if (!isCrossover()) return ao_parents;
+
+            int li_crosspoint = Globals<T>.RAND.Next(ao_parents[0].GetOrder().Count/2);
 
             Chromosome<T>[] lo_children = new Chromosome<T>[2];
 
@@ -23,14 +25,19 @@ namespace GeneticAPI._4_Recombination
 
         public Chromosome<T> CreateChild(int ai_crosspoint, Chromosome<T> ao_parent1, Chromosome<T> ao_parent2)
         {
-            //int li_countdown = ai_crosspoint;
-            int li_countdown = 3;
-            Dictionary<int, int> lo_newpositions = new Dictionary<int, int>();
+
+            //Don't change anything if not mutating.
+
+            int li_countdown = ai_crosspoint;
+            //int li_countdown = 4;
+            Dictionary<int, int> lo_newpositions_byid = new Dictionary<int, int>();
+            Dictionary<int, int> lo_newpositions_bypos = new Dictionary<int, int>();
             Dictionary<int, Gene<T>> lo_idgenemap = new Dictionary<int, Gene<T>>();
 
             for (int i = 0; i < ao_parent1.GetOrder().Count; i++)
             {
-                lo_newpositions.Add(ao_parent1.GetOrder()[i].data.id(), i);
+                lo_newpositions_byid.Add(ao_parent1.GetOrder()[i].data.id(), i);
+                lo_newpositions_bypos.Add(i, ao_parent1.GetOrder()[i].data.id());
                 lo_idgenemap.Add(ao_parent1.GetOrder()[i].data.id(), ao_parent1.GetOrder()[i]);
             }
 
@@ -41,22 +48,25 @@ namespace GeneticAPI._4_Recombination
                 int li_p2id = ao_parent2.GetOrder()[li_countdown].data.id();
 
                 //2. Find the position of this data in parent 1 chromosome gene list.
-                int li_p1_p2id_pos = lo_newpositions[li_p2id];
+                int li_p1_p2id_pos = lo_newpositions_byid[li_p2id];
 
                 //3. Set this position to be the crossover point.
-                lo_newpositions[li_p2id] = li_countdown;
+                lo_newpositions_byid[li_p2id] = li_countdown;
 
                 //4. Find the id at the crossover point of data in parent 1.
-                int li_p1id = ao_parent1.GetOrder()[li_countdown].data.id();
+                //int li_p1id = ao_parent1.GetOrder()[li_countdown].data.id();
+                int li_p1id = lo_newpositions_bypos[li_countdown];
+                lo_newpositions_bypos[li_countdown] = li_p2id;
 
                 //5. Set this position to be that of the position found in step 2.
-                lo_newpositions[li_p1id] = li_p1_p2id_pos;
+                lo_newpositions_byid[li_p1id] = li_p1_p2id_pos;
+                lo_newpositions_bypos[li_p1_p2id_pos] = li_p1id;
 
                 li_countdown--;
             }
 
             Gene<T>[] childgenes = new Gene<T>[ao_parent1.GetOrder().Count];
-            foreach (KeyValuePair<int, int> entry in lo_newpositions)
+            foreach (KeyValuePair<int, int> entry in lo_newpositions_byid)
             {
                 childgenes[entry.Value] = lo_idgenemap[entry.Key];
             }

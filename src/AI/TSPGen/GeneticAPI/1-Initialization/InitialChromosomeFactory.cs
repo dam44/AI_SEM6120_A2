@@ -25,7 +25,6 @@ namespace GeneticAPI
             {
                 lo_datakeys.Add(i);
             }
-
             Stack<int> lo_datakeystack = new Stack<int>(Shuffle(lo_datakeys));
             while (lo_datakeystack.Count > 0)
             {

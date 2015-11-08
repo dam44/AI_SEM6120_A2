@@ -1,9 +1,12 @@
-﻿using GeneticAPI._4_Recombination;
+﻿
+using GeneticAPI._4_Recombination;
 using GeneticAPI._5_Modification;
 using GeneticAPI._5_Modification.Mutation.PMX;
 using GeneticAPI.Events;
 using GeneticAPI.Selection;
 using GeneticAPI.Selection.Roulette;
+using GeneticAPI.Shared;
+using GeneticAPI.Shared.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,73 +27,74 @@ namespace GeneticAPI
                 Changed(this, e); 
             }
         }
-        public void Execute(List<T> ao_data, int ai_poolsize, int ai_generations, double ad_modifyprob)
-        {
+        public void Execute
+            (
+                List<T> ao_data, 
+                int ai_poolsize, 
+                int ai_generations, 
+                double ad_modifyprob, 
+                double ad_recomprob, 
+                Selectors aen_selector,
+                Randoms aen_random,
+                int ai_ts_contestants = 2
+            )
+        { 
+            //Initialize global variables.
             Globals<T>.DATA = DataEncoder<T>.EncodeListFromData(ao_data);
             Globals<T>.GENERATIONS = ai_generations;
             Globals<T>.POOLSIZE = ai_poolsize;
-            Globals<T>.RAND = new Random();
             Globals<T>.MODIFYPROB = ad_modifyprob;
+            Globals<T>.RECOMPROB = ad_recomprob;
 
-
-            List<Chromosome<T>> lo_initial_population = new List<Chromosome<T>>();
-            double ld_totalfitness = 0;
-            for (int i = 0; i< Globals<T>.POOLSIZE; i++)
+            if (aen_random == Randoms.Basic)
             {
-                Chromosome<T> temp = InitialChromosomeFactory<T>.GenerateChromosome();
-                ld_totalfitness += temp.fitness;
-                 lo_initial_population.Add(temp);
-            }
-            OnChanged(new APIEventArgs("Initialization procedure successful.", false, (ld_totalfitness / lo_initial_population.Count)));
-
-            int li_generation = 0;
-            Generation(li_generation, lo_initial_population);
-
-        }
-
-        public void Generation(int ai_gencount, List<Chromosome<T>> ao_generation)
-        {
-            Selector<T> lo_selector = new Roulette<T>(ao_generation);
-            List<Chromosome<T>> lo_generation_population = new List<Chromosome<T>>();
-            for (int i = 0; i < Globals<T>.POOLSIZE; i++)
-            {
-                lo_generation_population.Add(lo_selector.MakeSelection());
-            }
-
-            Recombination<T> lo_recom = new CrossoverPMX<T>();
-            for (int i = 0; i < Globals<T>.POOLSIZE; i+=2)
-            {
-                Chromosome<T>[] parents = { lo_generation_population[i], lo_generation_population[i + 1] };
-                Chromosome<T>[] children = lo_recom.GenerateChildren(parents);
-                lo_generation_population[i] = children[0];
-                lo_generation_population[i + 1] = children[1];
-            }
-
-            Modification<T> lo_modif = new MutationPMX<T>();
-            for (int i = 0; i < Globals<T>.POOLSIZE; i += 2)
-            {
-                Chromosome<T>[] parents = { lo_generation_population[i] };
-                Chromosome<T> child = lo_modif.ModifyChildren(parents)[0];
-                lo_generation_population[i] = child;
-            }
-
-            double ld_totalfitness = 0;
-            for (int i = 0; i < Globals<T>.POOLSIZE; i++)
-            {
-                ld_totalfitness += lo_generation_population[i].fitness;
-            }
-
-            OnChanged(new APIEventArgs("Initialization procedure successful.", false, (ld_totalfitness / lo_generation_population.Count)));
-            if (ai_gencount < Globals<T>.GENERATIONS)
-            {
-                return;
+                Globals<T>.RAND = new BasicRandom();
             }
             else
             {
-                OnChanged(new APIEventArgs("Fin.", false, (ld_totalfitness / lo_generation_population.Count)));
-                //Recursive call.
-                Generation(ai_gencount++, lo_generation_population);
+                Globals<T>.RAND = new AdvRandom();
             }
+
+
+            //Initialize local variables.
+            NotableChromosomes<T> lo_noteablechroms = new NotableChromosomes<T>();
+            List<Chromosome<T>> lo_population = new List<Chromosome<T>>();
+            double ld_fitness = 0;
+            double ld_inifitness = 0;
+            int li_generation = 0;
+
+
+            //Initialize population.
+            ExecutionFunctions<T>.Initialize(ref ld_inifitness, lo_population, lo_noteablechroms);
+
+
+            //Start Genetic Algorithm.
+            while (ContinueGA(ref li_generation)) {
+                ExecutionFunctions<T>.Select(lo_population, aen_selector, ai_ts_contestants);
+                ExecutionFunctions<T>.Recombination(lo_population);
+                ExecutionFunctions<T>.Modification(lo_population);
+                ExecutionFunctions<T>.EvaluateFitness(ref ld_fitness, lo_population, lo_noteablechroms);
+
+                //Send statistics to UI.
+                OnChanged(new APIEventArgs("", false, ld_fitness));
+            }
+
+            //Send final statistics to UI.
+            OnChanged(new APIEventArgs("Initial avg fitness: ", false, ld_inifitness));
+            OnChanged(new APIEventArgs("Final avg fitness: ", false, ld_fitness));
+            OnChanged(new APIEventArgs("Initial best fitness: ", false, lo_noteablechroms.GetInitialBest().fitness));
+            OnChanged(new APIEventArgs("Overall best fitness: ", false, lo_noteablechroms.GetFinalBest().fitness));
+
+        }
+
+        private bool ContinueGA(ref int ai_generation)
+        {
+            bool lb_ret = true;
+            if (ai_generation > Globals<T>.GENERATIONS) {
+                lb_ret = false;
+            }
+            ai_generation++;
+            return lb_ret;
         }
     }
 }

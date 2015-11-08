@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAPI.Shared
+namespace GeneticAPI.Shared.Util
 {
     public static class Util
     {
@@ -23,5 +23,6 @@ namespace GeneticAPI.Shared
             ao_list[e2] = temp;
 
         }
+
     }
 }

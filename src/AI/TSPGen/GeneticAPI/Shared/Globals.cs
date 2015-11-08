@@ -1,4 +1,5 @@
 ﻿using GeneticAPI;
+using GeneticAPI.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace GeneticAPI
         public static int POOLSIZE { get; set; }
         public static int GENERATIONS { get; set; }
         public static double MODIFYPROB { get; set; }
-        public static Random RAND { get; set; }
+        public static double RECOMPROB { get; set; }
+        public static GARandom RAND { get; set; }
     }
 }

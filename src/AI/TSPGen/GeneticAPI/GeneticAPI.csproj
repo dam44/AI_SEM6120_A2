@@ -45,17 +45,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="2-Fitness\Fitness.cs" />
+    <Compile Include="3-Selection\Selectors.cs" />
+    <Compile Include="3-Selection\Tournament\Tournament.cs" />
     <Compile Include="4-Recombination\Crossover\Crossover.cs" />
     <Compile Include="4-Recombination\Crossover\PMX\CrossoverPMX.cs" />
     <Compile Include="5-Modification\Modification.cs" />
     <Compile Include="5-Modification\Mutation\PMX\MutationPMX.cs" />
     <Compile Include="Events\APIEventArgs.cs" />
+    <Compile Include="ExecutionFunctions.cs" />
+    <Compile Include="Shared\Util\AdvRandom.cs" />
+    <Compile Include="Shared\Util\BasicRandom.cs" />
+    <Compile Include="Shared\Util\GARandom.cs" />
     <Compile Include="Shared\Globals.cs" />
     <Compile Include="1-Initialization\Data\IData.cs" />
     <Compile Include="1-Initialization\Data\Gene.cs" />
     <Compile Include="1-Initialization\Data\DataEncoder.cs" />
     <Compile Include="1-Initialization\Chromosome.cs" />
-    <Compile Include="1-Initialization\InitialIndividualFactory.cs" />
+    <Compile Include="1-Initialization\InitialChromosomeFactory.cs" />
     <Compile Include="5-Modification\Mutation\Mutation.cs" />
     <Compile Include="Processor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,7 +69,9 @@
     <Compile Include="4-Recombination\Recombination.cs" />
     <Compile Include="3-Selection\Roulette\Roulette.cs" />
     <Compile Include="3-Selection\Selector.cs" />
-    <Compile Include="Shared\Util.cs" />
+    <Compile Include="Shared\NotableChromosomes.cs" />
+    <Compile Include="Shared\Util\Randoms.cs" />
+    <Compile Include="Shared\Util\Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
