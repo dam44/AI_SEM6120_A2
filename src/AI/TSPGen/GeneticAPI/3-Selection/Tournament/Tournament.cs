@@ -10,21 +10,21 @@ namespace GeneticAPI.Selection.Tournament
     public class Tournament<T> : Selector<T> where T : IData
     {
         int ii_contestantsperevent;
-        public Tournament(List<Chromosome<T>> ao_individuals, int ai_contsperevent = 2) : base(ao_individuals)
+        public Tournament(Chromosome<T>[] ao_pop, int ai_contsperevent = 2) : base(ao_pop)
         {
             this.ii_contestantsperevent = ai_contsperevent;
         }
         public override Chromosome<T> MakeSelection()
         {
-            List<Chromosome<T>> lo_contestants = new List<Chromosome<T>>();
+            Chromosome<T>[] lo_contestants = new Chromosome<T>[ii_contestantsperevent];
             for (int i = 0; i < ii_contestantsperevent; i++)
             {
-                int li_contestantnumber = Globals<T>.RAND.Next(io_individuals.Count - 1);
-                lo_contestants.Add(io_individuals[li_contestantnumber]);
+                int li_contestantnumber = Globals<T>.RAND.Next(io_pop.Length - 1);
+                lo_contestants[i] = io_pop[li_contestantnumber];
             }
 
             Chromosome<T> lo_winner = lo_contestants[0];
-            for (int i = 1; i < lo_contestants.Count; i++)
+            for (int i = 1; i < lo_contestants.Length; i++)
             {
                 if (lo_contestants[i].fitness < lo_winner.fitness)
                 {

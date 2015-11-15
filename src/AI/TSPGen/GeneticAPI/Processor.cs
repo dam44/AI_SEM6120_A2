@@ -36,6 +36,7 @@ namespace GeneticAPI
                 double ad_recomprob, 
                 Selectors aen_selector,
                 Randoms aen_random,
+                int ai_elites = 1,
                 int ai_ts_contestants = 2
             )
         { 
@@ -45,6 +46,7 @@ namespace GeneticAPI
             Globals<T>.POOLSIZE = ai_poolsize;
             Globals<T>.MODIFYPROB = ad_modifyprob;
             Globals<T>.RECOMPROB = ad_recomprob;
+            Globals<T>.ELITENUM = ai_elites;
 
             if (aen_random == Randoms.Basic)
             {
@@ -58,23 +60,25 @@ namespace GeneticAPI
 
             //Initialize local variables.
             NotableChromosomes<T> lo_noteablechroms = new NotableChromosomes<T>();
-            List<Chromosome<T>> lo_population = new List<Chromosome<T>>();
+            Chromosome<T>[] lo_pop = new Chromosome<T>[Globals<T>.POOLSIZE];
             double ld_fitness = 0;
             double ld_inifitness = 0;
             int li_generation = 0;
 
 
             //Initialize population.
-            ExecutionFunctions<T>.Initialize(ref ld_inifitness, lo_population, lo_noteablechroms);
+            ExecutionFunctions<T>.Initialize(ref ld_inifitness, lo_pop, lo_noteablechroms);
 
-
+            Chromosome<T>[] lo_newpop = new Chromosome<T>[Globals<T>.POOLSIZE];
             //Start Genetic Algorithm.
             while (ContinueGA(ref li_generation)) {
-                ExecutionFunctions<T>.Select(lo_population, aen_selector, ai_ts_contestants);
-                ExecutionFunctions<T>.Recombination(lo_population);
-                ExecutionFunctions<T>.Modification(lo_population);
-                ExecutionFunctions<T>.EvaluateFitness(ref ld_fitness, lo_population, lo_noteablechroms);
+                ExecutionFunctions<T>.EvaluateElite(lo_pop, lo_newpop);
+                ExecutionFunctions<T>.Select(lo_pop, lo_newpop, aen_selector, ai_ts_contestants);
+                ExecutionFunctions<T>.Recombination(lo_newpop);
+                ExecutionFunctions<T>.Modification(lo_newpop);
+                ExecutionFunctions<T>.EvaluateFitness(ref ld_fitness, lo_newpop, lo_noteablechroms);
 
+                lo_pop = lo_newpop;
                 //Send statistics to UI.
                 OnChanged(new APIEventArgs("", false, ld_fitness));
             }

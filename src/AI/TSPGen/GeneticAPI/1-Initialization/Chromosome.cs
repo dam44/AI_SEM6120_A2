@@ -1,5 +1,6 @@
 ﻿
 using GeneticAPI;
+using GeneticAPI.Fitness;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace GeneticAPI
 {
     public class Chromosome<T> where T : IData
     {
+
         private List<Gene<T>> order { get; set; }
         public double fitness { get; }
 
@@ -24,8 +26,8 @@ namespace GeneticAPI
 
         public void SetOrder(List<Gene<T>> list)
         {
-            Fitness<T>.EvaluateTotal(order);
             order = list;
+            Fitness<T>.EvaluateTotal(order);
         }
 
         public Chromosome (List<Gene<T>> ao_order)
@@ -33,6 +35,7 @@ namespace GeneticAPI
             this.order = ao_order;
             this.fitness = Fitness<T>.EvaluateTotal(order);
         }
+
 
     }
 }

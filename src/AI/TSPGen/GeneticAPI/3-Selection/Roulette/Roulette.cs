@@ -10,7 +10,7 @@ namespace GeneticAPI.Selection.Roulette
     public class Roulette<T> : Selector<T> where T : IData
     {
         NotableChromosomes<T> io_notablechroms;
-        public Roulette(List<Chromosome<T>> ao_individuals, NotableChromosomes<T> ao_notablechroms = null) : base(ao_individuals)
+        public Roulette(Chromosome<T>[] ao_pop, NotableChromosomes<T> ao_notablechroms = null) : base(ao_pop)
         {
             io_notablechroms = ao_notablechroms;
         }
@@ -23,9 +23,9 @@ namespace GeneticAPI.Selection.Roulette
         public List<double> GeneratePercentageList()
         {
             List<double> ld_percentages = new List<double>();
-            for (int i = 0; i< io_individuals.Count; i++)
+            for (int i = 0; i< io_pop.Length; i++)
             {
-                ld_percentages.Add(FindIndividualPercentage(io_individuals[i]));
+                ld_percentages.Add(FindIndividualPercentage(io_pop[i]));
             }
 
             return ld_percentages;
@@ -50,7 +50,7 @@ namespace GeneticAPI.Selection.Roulette
                     }
 
             }
-            return io_individuals[li_count];
+            return io_pop[li_count];
         }
     }
 }

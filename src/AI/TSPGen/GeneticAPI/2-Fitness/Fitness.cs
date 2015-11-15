@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAPI
+namespace GeneticAPI.Fitness
 {
     public class Fitness<T> where T : IData
     {

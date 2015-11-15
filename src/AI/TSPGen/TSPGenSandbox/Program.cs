@@ -13,7 +13,10 @@ namespace TSPGenSandbox
         static void Main(string[] args)
         {
             Program lo_program = new Program();
-            lo_program.doWork(args);
+            do
+            {
+                lo_program.doWork(args);
+            } while (Console.ReadLine() != "q");
         }
 
         public void doWork(string[] args)
@@ -28,8 +31,7 @@ namespace TSPGenSandbox
 
             Processor<City> lo_processor = new Processor<City>();
             lo_processor.Changed += new ChangedEventHandler(Changed);
-            lo_processor.Execute(lo_data, 100, 2000, 0.0001, 0.2, GeneticAPI.Selection.Selectors.Tournament, GeneticAPI.Shared.Util.Randoms.Advanced, 5);
-            Console.ReadLine();
+            lo_processor.Execute(lo_data, 30, 200000, 0.001, 0.5, GeneticAPI.Selection.Selectors.Tournament, GeneticAPI.Shared.Util.Randoms.Advanced, 2, 4);
         }
 
         private void Changed(object sender, GeneticAPI.Events.APIEventArgs e)

@@ -8,20 +8,20 @@ namespace GeneticAPI.Selection
 {
     public abstract class Selector<T> where T : IData
     {
-        protected List<Chromosome<T>> io_individuals;
+        protected Chromosome<T>[] io_pop;
         protected double id_totalfitness;
-        public Selector(List<Chromosome<T>> ao_individuals)
+        public Selector(Chromosome<T>[] ao_pop)
         {
-            this.io_individuals = ao_individuals;
+            this.io_pop = ao_pop;
             this.id_totalfitness = FindTotalFitness();
         }
 
         protected double FindTotalFitness()
         {
             double ld_totalfitness = 0;
-            for (int i = 0; i < this.io_individuals.Count; i++)
+            for (int i = 0; i < this.io_pop.Length; i++)
             {
-                ld_totalfitness += this.io_individuals[i].fitness;
+                ld_totalfitness += this.io_pop[i].fitness;
             }
             return ld_totalfitness;
         }
