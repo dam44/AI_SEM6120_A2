@@ -62,12 +62,13 @@ namespace GeneticAPI
             NotableChromosomes<T> lo_noteablechroms = new NotableChromosomes<T>();
             Chromosome<T>[] lo_pop = new Chromosome<T>[Globals<T>.POOLSIZE];
             double ld_fitness = 0;
+            double ld_popbestfitness = 0;
             double ld_inifitness = 0;
             int li_generation = 0;
 
 
             //Initialize population.
-            ExecutionFunctions<T>.Initialize(ref ld_inifitness, lo_pop, lo_noteablechroms);
+            ExecutionFunctions<T>.Initialize(ref ld_inifitness, ref ld_popbestfitness, lo_pop, lo_noteablechroms);
 
             Chromosome<T>[] lo_newpop = new Chromosome<T>[Globals<T>.POOLSIZE];
             //Start Genetic Algorithm.
@@ -76,18 +77,18 @@ namespace GeneticAPI
                 ExecutionFunctions<T>.Select(lo_pop, lo_newpop, aen_selector, ai_ts_contestants);
                 ExecutionFunctions<T>.Recombination(lo_newpop);
                 ExecutionFunctions<T>.Modification(lo_newpop);
-                ExecutionFunctions<T>.EvaluateFitness(ref ld_fitness, lo_newpop, lo_noteablechroms);
+                ExecutionFunctions<T>.EvaluateFitness(ref ld_fitness, ref ld_popbestfitness, lo_newpop, lo_noteablechroms);
 
                 lo_pop = lo_newpop;
                 //Send statistics to UI.
-                OnChanged(new APIEventArgs("", false, ld_fitness));
+                OnChanged(new APIEventArgs("", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
             }
 
             //Send final statistics to UI.
-            OnChanged(new APIEventArgs("Initial avg fitness: ", false, ld_inifitness));
-            OnChanged(new APIEventArgs("Final avg fitness: ", false, ld_fitness));
-            OnChanged(new APIEventArgs("Initial best fitness: ", false, lo_noteablechroms.GetInitialBest().fitness));
-            OnChanged(new APIEventArgs("Overall best fitness: ", false, lo_noteablechroms.GetFinalBest().fitness));
+            OnChanged(new APIEventArgs("Initial avg fitness: ", false, ld_inifitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
+            OnChanged(new APIEventArgs("Final avg fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
+            OnChanged(new APIEventArgs("Initial best fitness: ", false,ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
+            OnChanged(new APIEventArgs("Overall best fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
 
         }
 

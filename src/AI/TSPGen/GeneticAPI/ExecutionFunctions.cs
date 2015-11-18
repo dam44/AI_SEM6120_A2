@@ -16,7 +16,7 @@ namespace GeneticAPI
 {
     public static class ExecutionFunctions<T> where T : IData
     {
-        public static void Initialize(ref double ad_fitness, Chromosome<T>[] ao_pop, NotableChromosomes<T> ao_notablechroms = null)
+        public static void Initialize(ref double ad_fitness, ref double ad_bestfitness, Chromosome<T>[] ao_pop, NotableChromosomes<T> ao_notablechroms = null)
         {
             for (int i = 0; i < Globals<T>.POOLSIZE; i++)
             {
@@ -27,7 +27,7 @@ namespace GeneticAPI
                     ao_notablechroms.UpdateInitialBest(temp);
                 }
             }
-            EvaluateFitness(ref ad_fitness, ao_pop);
+            EvaluateFitness(ref ad_fitness, ref ad_bestfitness, ao_pop);
         }
 
         public static void Select(Chromosome<T>[] ao_pop, Chromosome<T>[] ao_newpop, Selectors aen_selector, int ai_ts_contestants = 2)
@@ -86,12 +86,17 @@ namespace GeneticAPI
             }
         }
 
-        public static void EvaluateFitness(ref double ad_fitness, Chromosome<T>[] ao_pop, NotableChromosomes<T> ao_notablechroms = null)
+        public static void EvaluateFitness(ref double ad_fitness, ref double ad_bestfitness, Chromosome<T>[] ao_pop, NotableChromosomes<T> ao_notablechroms = null)
         {
+            ad_bestfitness = 0;
             double ld_tfitness = 0;
             for (int i = 0; i < Globals<T>.POOLSIZE; i++)
             {
                 ld_tfitness += ao_pop[i].fitness;
+                if (ao_pop[i].fitness < ad_bestfitness || ad_bestfitness == 0)
+                {
+                    ad_bestfitness = ao_pop[i].fitness;
+                }
                 if (ao_notablechroms != null)
                 {
                     ao_notablechroms.UpdateFinalBest(ao_pop[i]);

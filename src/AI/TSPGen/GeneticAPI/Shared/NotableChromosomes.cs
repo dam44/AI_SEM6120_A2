@@ -41,7 +41,7 @@ namespace GeneticAPI.Shared
 
         private void UpdateBest(string key, Chromosome<T> ao_chrom)
         {
-                if ((io_noteablechromosomes[key] == null) || (io_noteablechromosomes[key].fitness >= ao_chrom.fitness))
+                if ((io_noteablechromosomes[key] == null) || (io_noteablechromosomes[key].fitness > ao_chrom.fitness))
                 {
                     io_noteablechromosomes[key] = ao_chrom;
                 }
