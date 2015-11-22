@@ -44,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="2-Fitness\Elitism.cs" />
-    <Compile Include="2-Fitness\Fitness.cs" />
+    <Compile Include="3-Selection\2-Fitness\Elitism.cs" />
+    <Compile Include="3-Selection\2-Fitness\Fitness.cs" />
     <Compile Include="3-Selection\Selectors.cs" />
     <Compile Include="3-Selection\Tournament\Tournament.cs" />
     <Compile Include="4-Recombination\Crossover\Crossover.cs" />
-    <Compile Include="4-Recombination\Crossover\PMX\CrossoverPMX.cs" />
+    <Compile Include="4-Recombination\Crossover\PMX\OnePointCrossoverPMX.cs" />
+    <Compile Include="4-Recombination\Crossover\PMX\TwoPointCrossoverPMX.cs" />
+    <Compile Include="4-Recombination\Recombinators.cs" />
     <Compile Include="5-Modification\Modification.cs" />
     <Compile Include="5-Modification\Mutation\PMX\MutationPMX.cs" />
     <Compile Include="Events\APIEventArgs.cs" />

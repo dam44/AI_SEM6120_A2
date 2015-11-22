@@ -2,6 +2,7 @@
 using GeneticAPI._5_Modification;
 using GeneticAPI._5_Modification.Mutation.PMX;
 using GeneticAPI.Fitness;
+using GeneticAPI.Recombination;
 using GeneticAPI.Selection;
 using GeneticAPI.Selection.Roulette;
 using GeneticAPI.Selection.Tournament;
@@ -49,9 +50,16 @@ namespace GeneticAPI
             }
         }
 
-        public static void Recombination(Chromosome<T>[] ao_pop)
+        public static void Recombination(Chromosome<T>[] ao_pop, Recombinators aen_recomtype)
         {
-            Recombination<T> lo_recom = new CrossoverPMX<T>();
+            Recombination<T> lo_recom;
+            if (aen_recomtype == Recombinators.OnePointCrossoverPMX)
+            {
+                lo_recom = new OnePointCrossoverPMX<T>();
+            } else
+            {
+                lo_recom = new TwoPointCrossoverPMX<T>();
+            }
             int li_inc = 2;
             int li_child1 = 0;
             int li_child2 = 0;

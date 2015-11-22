@@ -1,5 +1,6 @@
 ﻿using GeneticAPI;
 using GeneticAPI.Events;
+using GeneticAPI.Recombination;
 using GeneticAPI.Selection;
 using GeneticAPI.Shared.Util;
 using System;
@@ -14,6 +15,7 @@ namespace TSPGenGUI
     public delegate void ChartEventHandler(object sender, GUIGAEvent e);
     public class GA
     {
+        private Recombinators ien_recomtype;
         public event ChartEventHandler ChartUpdate;
         private int ii_recpergen;
         private string ii_path;
@@ -44,11 +46,12 @@ namespace TSPGenGUI
 
             Processor<City> lo_processor = new Processor<City>();
             lo_processor.Changed += new ChangedEventHandler(Changed);
-            lo_processor.Execute(lo_data, ii_poolsize, ii_generations, id_modifyprob, id_recomprob, ien_selector, ien_random, ii_elites, ii_ts_contestants);
+            lo_processor.Execute(ien_recomtype, lo_data, ii_poolsize, ii_generations, id_modifyprob, id_recomprob, ien_selector, ien_random, ii_elites, ii_ts_contestants);
         }
 
         public void init
             (
+                Recombinators aen_recomtype,
                 int ai_recpergen,
                 string as_path,
                 int ai_poolsize,
@@ -61,6 +64,7 @@ namespace TSPGenGUI
                 int ai_ts_contestants = 2
             )
         {
+            ien_recomtype = aen_recomtype;
             ii_recpergen = ai_recpergen;
             ii_path = as_path;
             ii_poolsize = ai_poolsize;
@@ -71,6 +75,24 @@ namespace TSPGenGUI
             ien_random = aen_random;
             ii_elites = ai_elites;
             ii_ts_contestants = ai_ts_contestants;
+        }
+
+        public void init
+        (
+            GARun ao_run
+        )
+        {
+            ien_recomtype = ao_run.ien_recomtype;
+            ii_recpergen = ao_run.ii_recpergen;
+            ii_path = ao_run.ii_path;
+            ii_poolsize = ao_run.ii_poolsize;
+            ii_generations = ao_run.ii_generations;
+            id_modifyprob = ao_run.id_modifyprob;
+            id_recomprob = ao_run.id_recomprob;
+            ien_selector = ao_run.ien_selector;
+            ien_random = ao_run.ien_random;
+            ii_elites = ao_run.ii_elites;
+            ii_ts_contestants = ao_run.ii_ts_contestants;
         }
 
         private void Changed(object sender, GeneticAPI.Events.APIEventArgs e)

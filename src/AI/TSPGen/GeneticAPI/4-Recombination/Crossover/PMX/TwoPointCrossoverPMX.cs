@@ -6,29 +6,42 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI._4_Recombination
 {
-    public class CrossoverPMX<T> : Crossover<T> where T : IData
+    public class TwoPointCrossoverPMX<T> : Crossover<T> where T : IData
     {
         public override Chromosome<T>[] GenerateChildren(Chromosome<T>[] ao_parents)
         {
             if (!isCrossover()) return ao_parents;
 
-            int li_crosspoint = Globals<T>.RAND.Next(ao_parents[0].GetOrder().Count/2);
+            int li_crosspoint_one = Globals<T>.RAND.Next(ao_parents[0].GetOrder().Count / 2);
+            int li_crosspoint_two;
 
-            Chromosome<T>[] lo_children = new Chromosome<T>[2];
+            do
+            {
+                li_crosspoint_two = Globals<T>.RAND.Next(ao_parents[0].GetOrder().Count / 2);
+            } while (li_crosspoint_two == li_crosspoint_one);
 
-            lo_children[0] = CreateChild(li_crosspoint, ao_parents[0], ao_parents[1]);
-            lo_children[1] = CreateChild(li_crosspoint, ao_parents[1], ao_parents[0]);
+            if (li_crosspoint_two > li_crosspoint_one)
+            {
+                int temp = li_crosspoint_one;
+                li_crosspoint_one = li_crosspoint_two;
+                li_crosspoint_two = temp;
+            }
+
+            Chromosome < T >[] lo_children = new Chromosome<T>[2];
+
+            lo_children[0] = CreateChild(li_crosspoint_one, li_crosspoint_two, ao_parents[0], ao_parents[1]);
+            lo_children[1] = CreateChild(li_crosspoint_one, li_crosspoint_two, ao_parents[1], ao_parents[0]);
 
             return lo_children;
 
         }
 
-        public Chromosome<T> CreateChild(int ai_crosspoint, Chromosome<T> ao_parent1, Chromosome<T> ao_parent2)
+        public Chromosome<T> CreateChild(int ai_crosspoint_one, int ai_crosspoint_two, Chromosome<T> ao_parent1, Chromosome<T> ao_parent2)
         {
 
             //Don't change anything if not mutating.
 
-            int li_countdown = ai_crosspoint;
+            int li_countdown = ai_crosspoint_one;
             //int li_countdown = 4;
             Dictionary<int, int> lo_newpositions_byid = new Dictionary<int, int>();
             Dictionary<int, int> lo_newpositions_bypos = new Dictionary<int, int>();
@@ -41,7 +54,7 @@ namespace GeneticAPI._4_Recombination
                 lo_idgenemap.Add(ao_parent1.GetOrder()[i].data.id(), ao_parent1.GetOrder()[i]);
             }
 
-            while (li_countdown > 0)
+            while (li_countdown > ai_crosspoint_two)
             {
 
                 //1. Find id at crossover point of data in parent 2.

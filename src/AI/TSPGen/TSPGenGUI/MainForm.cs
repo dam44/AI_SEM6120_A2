@@ -1,9 +1,12 @@
 ﻿using GeneticAPI;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -16,17 +19,18 @@ namespace TSPGenGUI
 {
     public partial class MainForm : Form
     {
+        private BindingList<GARun> io_runs;
         private Thread io_gathread;
         private List<string> SERIES;
-        private string PATH
-        {
-            get; set;
-        }
 
       
         public MainForm()
         {
             InitializeComponent();
+
+            io_runs = new BindingList<GARun>();
+            lbox_runs.DataSource = io_runs;
+
             SERIES = new List<string>();
 
             string[] lo_series = { "Average Fitness", "Best Fitness" };
@@ -51,6 +55,8 @@ namespace TSPGenGUI
 
             }
         }
+
+
 
         delegate void UpdateLabelsCallback(GUIGAEvent e);
 
@@ -78,6 +84,8 @@ namespace TSPGenGUI
 
 
 
+
+
         private void Changed(object sender, GUIGAEvent e)
         {
             UpdateLabels(e);
@@ -94,45 +102,141 @@ namespace TSPGenGUI
 
             if (e.finished)
             {
-                io_gathread.Abort();
-                io_gathread = null;
+                try
+                {
+                    io_gathread.Abort();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("oops");
+                }
+                finally
+                {
+                    io_gathread = null;
+                    WriteToPDF("Results/" + io_runs[0].FileName());
+
+                    UpdateListBox();
+                    //io_runs = new BindingList<GARun>(io_runs);
+                    Start();
+                }
+
             }
         }
 
+        private delegate void UpdateListBoxCallback();
+
+        private void UpdateListBox()
+        {
+            try
+            {
+                if (this.lbox_runs.InvokeRequired)
+                {
+                    UpdateListBoxCallback lo_cb = new UpdateListBoxCallback(UpdateListBox);
+                    this.Invoke(lo_cb, new Object[] { });
+                }
+                else
+                {
+                    io_runs.RemoveAt(0);
+
+                    lbox_runs.BeginUpdate();
+                    lbox_runs.DataSource = io_runs;
+                    lbox_runs.EndUpdate();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private int runindex = 0;
         private void btn_start_Click(object sender, EventArgs e)
         {
-            PATH = tb_path.Text;
-            if (!string.IsNullOrWhiteSpace(PATH))
+            Start();
+        }
+
+        delegate void UpdateStartCallback();
+        private void Start()
+        {
+            if (this.cha_line_ga.InvokeRequired)
             {
-                GA lo_ga = new GA();
-            
-                io_gathread = new Thread(lo_ga.StartGA);
-                lo_ga.init
-                    (
-                        (int)nud_avgovr.Value,
-                        PATH,
-                        (int)nud_pool.Value,
-                        (int)nud_gen.Value,
-                        (double)nud_mutp.Value,
-                        (double)nud_crossp.Value,
-                        GeneticAPI.Selection.Selectors.Tournament,
-                        GeneticAPI.Shared.Util.Randoms.Advanced,
-                        (int)nud_elites.Value,
-                        (int)nud_conts.Value
-                    );
-                lo_ga.ChartUpdate += new ChartEventHandler(Changed);
-
-                cha_line_ga.Series.Clear();
-                SERIES.Clear();
-
-                for (int i = 0; i < cbl_data.CheckedItems.Count; i++)
+                UpdateStartCallback lo_cb = new UpdateStartCallback(Start);
+                this.Invoke(lo_cb, new Object[] { });
+            }
+            else
+            {
+                //for (int h = 0; h < io_runs.Count; h++)
+                //{
+                try
                 {
-                    SERIES.Add((string)cbl_data.CheckedItems[i]);
-                    cha_line_ga.Series.Add((string)cbl_data.CheckedItems[i]);
-                    cha_line_ga.Series[(string)cbl_data.CheckedItems[i]].ChartType = SeriesChartType.FastLine;
-                }
+                    GA lo_ga = new GA();
 
-                io_gathread.Start();
+                    io_gathread = new Thread(lo_ga.StartGA);
+                    lo_ga.init(io_runs[0]);
+                    //lo_ga.init
+                    //    (
+                    //        (int)nud_avgovr.Value,
+                    //        PATH,
+                    //        (int)nud_pool.Value,
+                    //        (int)nud_gen.Value,
+                    //        (double)nud_mutp.Value,
+                    //        (double)nud_crossp.Value,
+                    //        GeneticAPI.Selection.Selectors.Tournament,
+                    //        GeneticAPI.Shared.Util.Randoms.Advanced,
+                    //        (int)nud_elites.Value,
+                    //        (int)nud_conts.Value
+                    //    );
+                    lo_ga.ChartUpdate += new ChartEventHandler(Changed);
+
+                    cha_line_ga.Series.Clear();
+                    SERIES.Clear();
+
+                    for (int i = 0; i < cbl_data.CheckedItems.Count; i++)
+                    {
+                        SERIES.Add((string)cbl_data.CheckedItems[i]);
+                        cha_line_ga.Series.Add((string)cbl_data.CheckedItems[i]);
+                        cha_line_ga.Series[(string)cbl_data.CheckedItems[i]].ChartType = SeriesChartType.FastLine;
+                    }
+                    runindex++;
+                    io_gathread.Start();
+                    //}
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("oops");
+                }
+            }
+
+        }
+
+        private delegate void UpdateWriteToPdfCallback(string ls_filename);
+
+        public void WriteToPDF(string ls_filename)
+        {
+            try
+            {
+                if (this.cha_line_ga.InvokeRequired)
+                {
+                    UpdateWriteToPdfCallback lo_cb = new UpdateWriteToPdfCallback(WriteToPDF);
+                    this.Invoke(lo_cb, new Object[] { ls_filename });
+                }
+                else
+                {
+                    //Document lo_doc = new Document(iTextSharp.text.PageSize.LETTER, 10, 10, 42, 35);
+                    //PdfWriter lo_wri = PdfWriter.GetInstance(lo_doc, new FileStream("Test.pdf", FileMode.Create));
+                    //lo_doc.Open();
+
+                    //var lo_charImage = new MemoryStream();
+                    cha_line_ga.SaveImage(ls_filename, ChartImageFormat.Png);
+                    //iTextSharp.text.Image lo_image = iTextSharp.text.Image.GetInstance(lo_charImage);
+                    //lo_doc.Add(lo_image);
+
+                    //lo_doc.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("oops");
             }
         }
 
@@ -145,6 +249,27 @@ namespace TSPGenGUI
             tb_path.Text = lo_save.FileName;
         }
 
+
+        private void btn_add_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(tb_path.Text)) return;
+            io_runs.Add(new GARun(
+                        GeneticAPI.Recombination.Recombinators.TwoPointCrossoverPMX,
+                        (int)nud_avgovr.Value,
+                        tb_path.Text,
+                        (int)nud_pool.Value,
+                        (int)nud_gen.Value,
+                        (double)nud_mutp.Value,
+                        (double)nud_crossp.Value,
+                        GeneticAPI.Selection.Selectors.Tournament,
+                        GeneticAPI.Shared.Util.Randoms.Advanced,
+                        (int)nud_elites.Value,
+                        (int)nud_conts.Value
+                ));
+            //lbox_runs.Data
+            //lbox_runs.Update();
+        }
+
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -154,5 +279,52 @@ namespace TSPGenGUI
         {
 
         }
+
+        private void nud_pool_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_stop_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                io_gathread.Abort();
+                io_gathread = null;
+                UpdateListBox();
+            }
+            catch { }
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lb_gen_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lb_pavfit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lb_bestfit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

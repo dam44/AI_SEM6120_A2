@@ -11,9 +11,12 @@ namespace GeneticAPI._5_Modification
     {
         public bool isMutation()
         {
-
-            double ld_probwheel = ((double)Globals<T>.RAND.Next(100)) / 100;
-
+            double ld_probwheel;
+            do
+            {
+                ld_probwheel = ((double)Globals<T>.RAND.Next(10000000)) / 10000000;
+            } while (ld_probwheel == 0);
+           
             if (Globals<T>.MODIFYPROB > ld_probwheel)
             {
                 return true;

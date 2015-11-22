@@ -3,6 +3,7 @@ using GeneticAPI._4_Recombination;
 using GeneticAPI._5_Modification;
 using GeneticAPI._5_Modification.Mutation.PMX;
 using GeneticAPI.Events;
+using GeneticAPI.Recombination;
 using GeneticAPI.Selection;
 using GeneticAPI.Selection.Roulette;
 using GeneticAPI.Shared;
@@ -29,6 +30,7 @@ namespace GeneticAPI
         }
         public void Execute
             (
+                Recombinators aen_recomtype,
                 List<T> ao_data, 
                 int ai_poolsize, 
                 int ai_generations, 
@@ -75,7 +77,7 @@ namespace GeneticAPI
             while (ContinueGA(ref li_generation)) {
                 ExecutionFunctions<T>.EvaluateElite(lo_pop, lo_newpop);
                 ExecutionFunctions<T>.Select(lo_pop, lo_newpop, aen_selector, ai_ts_contestants);
-                ExecutionFunctions<T>.Recombination(lo_newpop);
+                ExecutionFunctions<T>.Recombination(lo_newpop, aen_recomtype);
                 ExecutionFunctions<T>.Modification(lo_newpop);
                 ExecutionFunctions<T>.EvaluateFitness(ref ld_fitness, ref ld_popbestfitness, lo_newpop, lo_noteablechroms);
 
@@ -88,7 +90,7 @@ namespace GeneticAPI
             OnChanged(new APIEventArgs("Initial avg fitness: ", false, ld_inifitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
             OnChanged(new APIEventArgs("Final avg fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
             OnChanged(new APIEventArgs("Initial best fitness: ", false,ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
-            OnChanged(new APIEventArgs("Overall best fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
+            OnChanged(new APIEventArgs("Overall best fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, true));
 
         }
 
