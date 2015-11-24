@@ -10,7 +10,7 @@ namespace TSPGenGUI
     {
         public int ii_generations { get;set;}
 
-        public GUIGAEvent(GeneticAPI.Events.APIEventArgs e, int ai_generations) : base(e.message, e.error, e.avgfitness, e.popbestfitness, e.bestfitness, e.finished)
+        public GUIGAEvent(GeneticAPI.Events.APIEventArgs e, int ai_generations) : base(e.message, e.error, e.avgfitness, e.popbestfitness, e.bestfitness, e.bestchrom, e.finished)
         {
             ii_generations = ai_generations;
         }
@@ -22,6 +22,7 @@ namespace TSPGenGUI
             double ad_popbestfitness, 
             double ad_bestfitness,
             int ai_generations, 
+            string as_bestchrom,
             bool ab_finished = false
             )
             : base
@@ -31,6 +32,7 @@ namespace TSPGenGUI
             ad_avgfitness,
             ad_popbestfitness,
             ad_bestfitness,
+            as_bestchrom,
             ab_finished      
             )
         {

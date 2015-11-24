@@ -60,33 +60,13 @@ namespace GeneticAPI
             {
                 lo_recom = new TwoPointCrossoverPMX<T>();
             }
-            int li_inc = 2;
-            int li_child1 = 0;
-            int li_child2 = 0;
-            for (int i = Globals<T>.ELITENUM; i < Globals<T>.POOLSIZE; i += li_inc)
-            {
-                if (i >= Globals<T>.POOLSIZE)
-                {
-                    break;
-                }
-                else if (i+1 >= Globals<T>.POOLSIZE)
-                {
-                    break;
-                }
-                li_child1 = i;
-                li_child2 = i + 1;
-                li_inc = 2;
-                Chromosome<T>[] parents = { ao_pop[li_child1], ao_pop[li_child2] };
-                Chromosome<T>[] children = lo_recom.GenerateChildren(parents);
-                ao_pop[i] = children[0];
-                ao_pop[i + 1] = children[1];
-            }
+            ao_pop = lo_recom.GenerateChildren(ao_pop);
         }
 
         public static void Modification(Chromosome<T>[] ao_pop)
         {
             Modification<T> lo_modif = new MutationPMX<T>();
-            for (int i = Globals<T>.ELITENUM; i < Globals<T>.POOLSIZE; i++)
+            for (int i = 0; i < Globals<T>.POOLSIZE; i++)
             {
                     Chromosome<T>[] parents = { ao_pop[i] };
                     Chromosome<T> child = lo_modif.ModifyChildren(parents)[0];
@@ -98,6 +78,7 @@ namespace GeneticAPI
         {
             ad_bestfitness = 0;
             double ld_tfitness = 0;
+            Globals<T>.MODIFYBONUS = 0;
             for (int i = 0; i < Globals<T>.POOLSIZE; i++)
             {
                 ld_tfitness += ao_pop[i].fitness;
@@ -109,13 +90,25 @@ namespace GeneticAPI
                 {
                     ao_notablechroms.UpdateFinalBest(ao_pop[i]);
                 }
+                if ((Globals<T>.MODIFYPROB + Globals<T>.MODIFYBONUS) < 1)
+                {
+                    for (int j = 0; j < Globals<T>.POOLSIZE; j++)
+                    {
+                        if (i == j) continue;
+
+                        if ((int)ao_pop[i].fitness == (int)ao_pop[j].fitness)
+                        {
+                            Globals<T>.MODIFYBONUS += 0.1/Globals<T>.POOLSIZE;
+                        }
+                    }
+                }
             }
 
             ad_fitness = (ld_tfitness / ao_pop.Length);
         }
 
         public static void EvaluateElite(Chromosome<T>[] ao_pop, Chromosome<T>[] ao_newpop) {
-            Elitism<T>.MarkElite(ao_pop, ao_newpop);
+            GeneticAPI.Fitness.Elitism<T>.MarkElite(ao_pop, ao_newpop);
         }
     }
 }

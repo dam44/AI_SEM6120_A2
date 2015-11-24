@@ -14,6 +14,6 @@ namespace GeneticAPI
 
         }
 
-        public abstract Chromosome<T>[] GenerateChildren(Chromosome<T>[] parents);
+        public abstract Chromosome<T>[] GenerateChildren(Chromosome<T>[] ao_parents);
     }
 }

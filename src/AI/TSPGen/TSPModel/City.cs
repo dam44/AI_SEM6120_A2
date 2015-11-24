@@ -39,5 +39,10 @@ namespace TSPModel
         {
             return this.id;
         }
+
+        public override string ToString()
+        {
+            return id.ToString() + " ";
+        }
     }
 }

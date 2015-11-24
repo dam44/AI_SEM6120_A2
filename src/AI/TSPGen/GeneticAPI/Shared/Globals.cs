@@ -14,6 +14,8 @@ namespace GeneticAPI
         public static int POOLSIZE { get; set; }
         public static int GENERATIONS { get; set; }
         public static double MODIFYPROB { get; set; }
+
+        public static double MODIFYBONUS { get; set; }
         public static double RECOMPROB { get; set; }
         public static GARandom RAND { get; set; }
         public static int ELITENUM { get; set; }

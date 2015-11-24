@@ -74,6 +74,7 @@ namespace TSPGenGUI
                     lb_bestfit.Text = e.bestfitness.ToString();
                     lb_gen.Text = e.ii_generations.ToString();
                     lb_pavfit.Text = e.avgfitness.ToString();
+                    lb_bestc.Text = e.bestchrom;
                 }
             }
             catch (Exception ex)

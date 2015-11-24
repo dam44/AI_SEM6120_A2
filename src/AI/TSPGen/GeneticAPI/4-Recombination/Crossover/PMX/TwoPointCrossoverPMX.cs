@@ -8,7 +8,7 @@ namespace GeneticAPI._4_Recombination
 {
     public class TwoPointCrossoverPMX<T> : Crossover<T> where T : IData
     {
-        public override Chromosome<T>[] GenerateChildren(Chromosome<T>[] ao_parents)
+        public override Chromosome<T>[] GenerateChildPair(Chromosome<T>[] ao_parents)
         {
             if (!isCrossover()) return ao_parents;
 

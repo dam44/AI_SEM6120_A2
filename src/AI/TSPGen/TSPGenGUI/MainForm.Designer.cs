@@ -59,6 +59,8 @@
             this.lbox_runs = new System.Windows.Forms.ListBox();
             this.label9 = new System.Windows.Forms.Label();
             this.btn_add = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lb_bestc = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.cha_line_ga)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_avgovr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_pool)).BeginInit();
@@ -337,7 +339,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(919, 324);
+            this.label10.Location = new System.Drawing.Point(919, 317);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(156, 17);
             this.label10.TabIndex = 21;
@@ -347,7 +349,7 @@
             // lb_pavfit
             // 
             this.lb_pavfit.AutoSize = true;
-            this.lb_pavfit.Location = new System.Drawing.Point(1081, 324);
+            this.lb_pavfit.Location = new System.Drawing.Point(1081, 317);
             this.lb_pavfit.Name = "lb_pavfit";
             this.lb_pavfit.Size = new System.Drawing.Size(16, 17);
             this.lb_pavfit.TabIndex = 22;
@@ -357,7 +359,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(983, 351);
+            this.label12.Location = new System.Drawing.Point(983, 335);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(89, 17);
             this.label12.TabIndex = 23;
@@ -367,7 +369,7 @@
             // lb_bestfit
             // 
             this.lb_bestfit.AutoSize = true;
-            this.lb_bestfit.Location = new System.Drawing.Point(1081, 352);
+            this.lb_bestfit.Location = new System.Drawing.Point(1081, 336);
             this.lb_bestfit.Name = "lb_bestfit";
             this.lb_bestfit.Size = new System.Drawing.Size(16, 17);
             this.lb_bestfit.TabIndex = 24;
@@ -412,11 +414,31 @@
             this.btn_add.UseVisualStyleBackColor = true;
             this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(987, 353);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(85, 17);
+            this.label11.TabIndex = 29;
+            this.label11.Text = "Best Chrom:";
+            // 
+            // lb_bestc
+            // 
+            this.lb_bestc.AutoSize = true;
+            this.lb_bestc.Location = new System.Drawing.Point(1081, 353);
+            this.lb_bestc.Name = "lb_bestc";
+            this.lb_bestc.Size = new System.Drawing.Size(16, 17);
+            this.lb_bestc.TabIndex = 30;
+            this.lb_bestc.Text = "?";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1226, 584);
+            this.Controls.Add(this.lb_bestc);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.btn_add);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.lbox_runs);
@@ -492,6 +514,8 @@
         private System.Windows.Forms.ListBox lbox_runs;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btn_add;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lb_bestc;
     }
 }
 

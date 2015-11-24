@@ -19,7 +19,7 @@ namespace GeneticAPI.Fitness
         public static double EvaluateTotal(List<Gene<T>> ao_order)
         {
             double ld_totalfitness = 0;
-            for(int i = 0; i< ao_order.Count - 1; i++)
+            for (int i = 0; i < ao_order.Count - 1; i++)
             {
                 ld_totalfitness += Evaluate(ao_order[i].data, ao_order[i + 1].data);
             }

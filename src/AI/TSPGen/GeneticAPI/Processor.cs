@@ -47,6 +47,7 @@ namespace GeneticAPI
             Globals<T>.GENERATIONS = ai_generations;
             Globals<T>.POOLSIZE = ai_poolsize;
             Globals<T>.MODIFYPROB = ad_modifyprob;
+            Globals<T>.MODIFYBONUS = 0;
             Globals<T>.RECOMPROB = ad_recomprob;
             Globals<T>.ELITENUM = ai_elites;
 
@@ -83,14 +84,14 @@ namespace GeneticAPI
 
                 lo_pop = lo_newpop;
                 //Send statistics to UI.
-                OnChanged(new APIEventArgs("", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
+                OnChanged(new APIEventArgs("", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
             }
 
             //Send final statistics to UI.
-            OnChanged(new APIEventArgs("Initial avg fitness: ", false, ld_inifitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
-            OnChanged(new APIEventArgs("Final avg fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
-            OnChanged(new APIEventArgs("Initial best fitness: ", false,ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness));
-            OnChanged(new APIEventArgs("Overall best fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, true));
+            OnChanged(new APIEventArgs("Initial avg fitness: ", false, ld_inifitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
+            OnChanged(new APIEventArgs("Final avg fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
+            OnChanged(new APIEventArgs("Initial best fitness: ", false,ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
+            OnChanged(new APIEventArgs("Overall best fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString(), true));
 
         }
 
