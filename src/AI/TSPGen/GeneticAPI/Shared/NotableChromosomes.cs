@@ -20,12 +20,12 @@ namespace GeneticAPI.Shared
 
         public void UpdateFinalBest(Chromosome<T> ao_chrom)
         {
-            UpdateBest("FINALBEST", ao_chrom);
+            UpdateBest("FINALBEST", new Chromosome<T>(ao_chrom));
         }
 
         public void UpdateInitialBest(Chromosome<T> ao_chrom)
         {
-            UpdateBest("INITIALBEST", ao_chrom);
+            UpdateBest("INITIALBEST", new Chromosome<T>(ao_chrom));
         }
 
         public Chromosome<T> GetFinalBest()
@@ -43,7 +43,7 @@ namespace GeneticAPI.Shared
         {
                 if ((io_noteablechromosomes[key] == null) || (io_noteablechromosomes[key].fitness > ao_chrom.fitness))
                 {
-                    io_noteablechromosomes[key] = ao_chrom;
+                    io_noteablechromosomes[key] = new Chromosome<T>(ao_chrom);
                 }
 
         }

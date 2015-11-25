@@ -6,26 +6,23 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI.Selection
 {
-    public class Elitism<T> : Selection.Selector<T> where T : IData
+    public class Elitism<T> where T : IData
     {
-        public Elitism(Chromosome<T>[] ao_pop) : base(ao_pop)
-        {
+        private Chromosome<T>[] io_elites;
 
+        public Elitism()
+        {
+            io_elites = new Chromosome<T>[Globals<T>.ELITENUM];
         }
 
-        //public Chromosome<T>[] ChooseParents()
-        //{
-        //    List<Chromosome<T>> lo_parents = new List<Chromosome<T>>();
-        //    for (int i = 0; i < Globals<T>.POOLSIZE; i++)
-        //    {
-        //        lo_parents.Add(io_pop[i]);
-        //        for ()
-        //    }
-        //}
-
-        public override Chromosome<T> MakeSelection()
+        public void AddElite(int ai_num, Chromosome<T> ao_chrom)
         {
-            return null;
+            io_elites[ai_num] = new Chromosome<T>(ao_chrom);
+        }
+
+        public Chromosome<T> GetElite(int ai_num)
+        {
+            return io_elites[ai_num];
         }
     }
 }

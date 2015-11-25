@@ -1,4 +1,4 @@
-﻿using GeneticAPI._4_Recombination;
+﻿using GeneticAPI.Recombination;
 using GeneticAPI._5_Modification;
 using GeneticAPI._5_Modification.Mutation.PMX;
 using GeneticAPI.Fitness;
@@ -66,12 +66,7 @@ namespace GeneticAPI
         public static void Modification(Chromosome<T>[] ao_pop)
         {
             Modification<T> lo_modif = new MutationPMX<T>();
-            for (int i = 0; i < Globals<T>.POOLSIZE; i++)
-            {
-                    Chromosome<T>[] parents = { ao_pop[i] };
-                    Chromosome<T> child = lo_modif.ModifyChildren(parents)[0];
-                    ao_pop[i] = child;
-            }
+            lo_modif.MutatePopulation(ao_pop);
         }
 
         public static void EvaluateFitness(ref double ad_fitness, ref double ad_bestfitness, Chromosome<T>[] ao_pop, NotableChromosomes<T> ao_notablechroms = null)
@@ -90,18 +85,18 @@ namespace GeneticAPI
                 {
                     ao_notablechroms.UpdateFinalBest(ao_pop[i]);
                 }
-                if ((Globals<T>.MODIFYPROB + Globals<T>.MODIFYBONUS) < 1)
-                {
-                    for (int j = 0; j < Globals<T>.POOLSIZE; j++)
-                    {
-                        if (i == j) continue;
+                //if ((Globals<T>.MODIFYPROB + Globals<T>.MODIFYBONUS) < 1)
+                //{
+                //    for (int j = 0; j < Globals<T>.POOLSIZE; j++)
+                //    {
+                //        if (i == j) continue;
 
-                        if ((int)ao_pop[i].fitness == (int)ao_pop[j].fitness)
-                        {
-                            Globals<T>.MODIFYBONUS += 0.1/Globals<T>.POOLSIZE;
-                        }
-                    }
-                }
+                //        if ((int)ao_pop[i].fitness == (int)ao_pop[j].fitness)
+                //        {
+                //            Globals<T>.MODIFYBONUS += 0.1/Globals<T>.POOLSIZE;
+                //        }
+                //    }
+                //}
             }
 
             ad_fitness = (ld_tfitness / ao_pop.Length);

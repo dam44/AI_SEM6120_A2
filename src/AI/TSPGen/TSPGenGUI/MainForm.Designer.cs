@@ -153,7 +153,7 @@
             this.nud_pool.Size = new System.Drawing.Size(91, 22);
             this.nud_pool.TabIndex = 7;
             this.nud_pool.Value = new decimal(new int[] {
-            30,
+            100,
             0,
             0,
             0});
@@ -210,11 +210,6 @@
             this.nud_elites.Name = "nud_elites";
             this.nud_elites.Size = new System.Drawing.Size(91, 22);
             this.nud_elites.TabIndex = 11;
-            this.nud_elites.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
             // 
             // label4
             // 
@@ -272,7 +267,7 @@
             5,
             0,
             0,
-            196608});
+            131072});
             // 
             // label6
             // 
@@ -311,7 +306,7 @@
             this.nud_crossp.Size = new System.Drawing.Size(91, 22);
             this.nud_crossp.TabIndex = 17;
             this.nud_crossp.Value = new decimal(new int[] {
-            4,
+            7,
             0,
             0,
             65536});

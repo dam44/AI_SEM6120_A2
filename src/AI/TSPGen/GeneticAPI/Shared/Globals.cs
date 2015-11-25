@@ -1,5 +1,6 @@
 ﻿using GeneticAPI;
 using GeneticAPI.Shared;
+using GeneticAPI.SuperSeeder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI
 {
-    public class Globals<T>
+    public class Globals<T> where T :IData
     {
         public static List<GeneticAPI.Gene<T>> DATA { get; set; }
         public static int POOLSIZE { get; set; }
@@ -19,5 +20,7 @@ namespace GeneticAPI
         public static double RECOMPROB { get; set; }
         public static GARandom RAND { get; set; }
         public static int ELITENUM { get; set; }
+
+        public static ConcurrentPriorityQueue<Chromosome<T>> CPQ;
     }
 }

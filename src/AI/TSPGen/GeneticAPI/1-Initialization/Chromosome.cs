@@ -41,6 +41,12 @@ namespace GeneticAPI
             this.fitness = Fitness<T>.EvaluateTotal(order);
         }
 
+        public Chromosome (Chromosome<T> ao_chrom)
+        {
+            order = ao_chrom.order;
+            fitness = Fitness<T>.EvaluateTotal(order);
+        }
+
         public override string ToString()
         {
             if (String.IsNullOrEmpty(is_tostring))

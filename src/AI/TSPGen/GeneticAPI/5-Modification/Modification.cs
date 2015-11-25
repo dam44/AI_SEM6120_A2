@@ -8,7 +8,7 @@ namespace GeneticAPI._5_Modification
 {
     public abstract class Modification<T> where T : IData
     {
-
+        public abstract Chromosome<T>[] MutatePopulation(Chromosome<T>[] population);
         public abstract Chromosome<T>[] ModifyChildren(Chromosome<T>[] parents);
     }
 }

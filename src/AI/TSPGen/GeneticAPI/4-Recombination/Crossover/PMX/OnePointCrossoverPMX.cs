@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAPI._4_Recombination
+namespace GeneticAPI.Recombination
 {
     public class OnePointCrossoverPMX<T> : Crossover<T> where T : IData
     {

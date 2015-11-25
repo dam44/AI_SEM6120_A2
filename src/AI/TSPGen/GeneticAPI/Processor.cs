@@ -1,5 +1,5 @@
 ﻿
-using GeneticAPI._4_Recombination;
+using GeneticAPI.Recombination;
 using GeneticAPI._5_Modification;
 using GeneticAPI._5_Modification.Mutation.PMX;
 using GeneticAPI.Events;
@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GeneticAPI.SuperSeeder;
+using System.Threading;
 
 namespace GeneticAPI
 {
@@ -69,6 +71,11 @@ namespace GeneticAPI
             double ld_inifitness = 0;
             int li_generation = 0;
 
+            Globals<T>.CPQ = new ConcurrentPriorityQueue<Chromosome<T>>(100);
+            SuperSeed<T> lo_seeder = new SuperSeed<T>(ref Globals<T>.CPQ);
+            Thread lo_thread = new Thread(new ThreadStart(lo_seeder.Run));
+            lo_thread.Start();
+
 
             //Initialize population.
             ExecutionFunctions<T>.Initialize(ref ld_inifitness, ref ld_popbestfitness, lo_pop, lo_noteablechroms);
@@ -92,7 +99,6 @@ namespace GeneticAPI
             OnChanged(new APIEventArgs("Final avg fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
             OnChanged(new APIEventArgs("Initial best fitness: ", false,ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
             OnChanged(new APIEventArgs("Overall best fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString(), true));
-
         }
 
         private bool ContinueGA(ref int ai_generation)

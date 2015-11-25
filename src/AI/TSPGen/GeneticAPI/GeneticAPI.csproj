@@ -76,6 +76,8 @@
     <Compile Include="Shared\NotableChromosomes.cs" />
     <Compile Include="Shared\Util\Randoms.cs" />
     <Compile Include="Shared\Util\Util.cs" />
+    <Compile Include="SuperSeeder\ConcurrentPriorityQueue.cs" />
+    <Compile Include="SuperSeeder\SuperSeed.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
