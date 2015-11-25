@@ -10,6 +10,25 @@ namespace GeneticAPI.Recombination
     public abstract class Crossover<T> : Recombination<T> where T : IData
     {
 
+        private Chromosome<T> GetOrphanChild(Chromosome<T> ao_disappointingchild)
+        {
+            //Filing paper work...
+            Chromosome<T> lo_orphanchild = null;
+            if (Globals<T>.SROG)
+            {
+                lo_orphanchild = Globals<T>.CPQ.Dequeue();
+            } else if (Globals<T>.ROG)
+            {
+                lo_orphanchild = InitialChromosomeFactory<T>.GenerateChromosome();
+            } else
+            {
+                //Decided against trading away that disgrace of a child.
+                lo_orphanchild = ao_disappointingchild;
+            }
+            //Take it home.
+            return lo_orphanchild;
+
+        }
         public override Chromosome<T>[] GenerateChildren(Chromosome<T>[] ao_parents)
         {
             Array.Sort(ao_parents);
@@ -19,8 +38,7 @@ namespace GeneticAPI.Recombination
             {
                 if ((ao_parents[i].CompareTo(ao_parents[i + 1])) == 0)
                 {
-                    ao_parents[i + 1] = Globals<T>.CPQ.Dequeue();
-                    //ao_parents[i + 1] = InitialChromosomeFactory<T>.GenerateChromosome();
+                    ao_parents[i + 1] = GetOrphanChild(ao_parents[i + 1]);
                 }
                 Copulate(ref ao_parents, i);
             }
@@ -30,7 +48,7 @@ namespace GeneticAPI.Recombination
                 Chromosome<T>[] lo_parents = new Chromosome<T>[2];
                 lo_parents[0] = ao_parents[ao_parents.Length - 1];
                 //lo_parents[1] = InitialChromosomeFactory<T>.GenerateChromosome();
-                lo_parents[1] = Globals<T>.CPQ.Dequeue();
+                lo_parents[1] = GetOrphanChild(ao_parents[1]);
                 Copulate(ref lo_parents, 0);
                 ao_parents[ao_parents.Length - 1] = lo_parents[0];
             }

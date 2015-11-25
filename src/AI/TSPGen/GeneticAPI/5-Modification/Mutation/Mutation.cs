@@ -50,7 +50,7 @@ namespace GeneticAPI._5_Modification
         public bool isMutation()
         {
             ii_iterationcount++;
-            if (ii_iterationcount > ii_iterationsreq)
+            if (Globals<T>.ADAPTMUT && (ii_iterationcount > ii_iterationsreq))
             {
                 CalcMutationBonus();
             }

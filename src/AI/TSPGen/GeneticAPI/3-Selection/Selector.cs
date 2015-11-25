@@ -10,10 +10,12 @@ namespace GeneticAPI.Selection
     {
         protected Chromosome<T>[] io_pop;
         protected double id_totalfitness;
+        protected double id_totalinversefitness;
         public Selector(Chromosome<T>[] ao_pop)
         {
             this.io_pop = ao_pop;
             this.id_totalfitness = FindTotalFitness();
+            this.id_totalinversefitness = FindTotalInverseFitness();
         }
 
         protected double FindTotalFitness()
@@ -22,8 +24,20 @@ namespace GeneticAPI.Selection
             for (int i = 0; i < this.io_pop.Length; i++)
             {
                 ld_totalfitness += this.io_pop[i].fitness;
+
             }
             return ld_totalfitness;
+        }
+
+        protected double FindTotalInverseFitness()
+        {
+            double ld_totalinversefitness = 0;
+            for (int i = 0; i < this.io_pop.Length; i++)
+            {
+                ld_totalinversefitness += (1/(this.io_pop[i].fitness));
+
+            }
+            return ld_totalinversefitness;
         }
 
         public abstract Chromosome<T> MakeSelection();

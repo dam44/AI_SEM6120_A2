@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="2-Fitness\Elitism.cs" />
     <Compile Include="2-Fitness\Fitness.cs" />
-    <Compile Include="3-Selection\Elitism\Elitism.cs" />
+    <Compile Include="3-Selection\Rank\Rank.cs" />
     <Compile Include="3-Selection\Selectors.cs" />
     <Compile Include="3-Selection\Tournament\Tournament.cs" />
     <Compile Include="4-Recombination\Crossover\Crossover.cs" />

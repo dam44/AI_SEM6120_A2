@@ -32,16 +32,19 @@ namespace GeneticAPI
         }
         public void Execute
             (
-                Recombinators aen_recomtype,
                 List<T> ao_data, 
                 int ai_poolsize, 
                 int ai_generations, 
                 double ad_modifyprob, 
                 double ad_recomprob, 
                 Selectors aen_selector,
+                Recombinators aen_recomb,
                 Randoms aen_random,
                 int ai_elites = 1,
-                int ai_ts_contestants = 2
+                int ai_ts_contestants = 2,
+                bool ab_adaptivemut = true,
+                bool ab_rog = false,
+                bool ab_srog = true
             )
         { 
             //Initialize global variables.
@@ -52,6 +55,9 @@ namespace GeneticAPI
             Globals<T>.MODIFYBONUS = 0;
             Globals<T>.RECOMPROB = ad_recomprob;
             Globals<T>.ELITENUM = ai_elites;
+            Globals<T>.ADAPTMUT = ab_adaptivemut;
+            Globals<T>.ROG = ab_rog;
+            Globals<T>.SROG = ab_srog;
 
             if (aen_random == Randoms.Basic)
             {
@@ -71,10 +77,14 @@ namespace GeneticAPI
             double ld_inifitness = 0;
             int li_generation = 0;
 
-            Globals<T>.CPQ = new ConcurrentPriorityQueue<Chromosome<T>>(100);
-            SuperSeed<T> lo_seeder = new SuperSeed<T>(ref Globals<T>.CPQ);
-            Thread lo_thread = new Thread(new ThreadStart(lo_seeder.Run));
-            lo_thread.Start();
+            Thread lo_thread = null;
+            if (Globals<T>.SROG)
+            {
+                Globals<T>.CPQ = new ConcurrentPriorityQueue<Chromosome<T>>(100);
+                SuperSeed<T> lo_seeder = new SuperSeed<T>(ref Globals<T>.CPQ);
+                lo_thread = new Thread(new ThreadStart(lo_seeder.Run));
+                lo_thread.Start();
+            }
 
 
             //Initialize population.
@@ -83,9 +93,9 @@ namespace GeneticAPI
             Chromosome<T>[] lo_newpop = new Chromosome<T>[Globals<T>.POOLSIZE];
             //Start Genetic Algorithm.
             while (ContinueGA(ref li_generation)) {
-                ExecutionFunctions<T>.EvaluateElite(lo_pop, lo_newpop);
+                ExecutionFunctions<T>.EvaluateElite(lo_pop);
                 ExecutionFunctions<T>.Select(lo_pop, lo_newpop, aen_selector, ai_ts_contestants);
-                ExecutionFunctions<T>.Recombination(lo_newpop, aen_recomtype);
+                ExecutionFunctions<T>.Recombination(lo_newpop, aen_recomb);
                 ExecutionFunctions<T>.Modification(lo_newpop);
                 ExecutionFunctions<T>.EvaluateFitness(ref ld_fitness, ref ld_popbestfitness, lo_newpop, lo_noteablechroms);
 
@@ -99,6 +109,11 @@ namespace GeneticAPI
             OnChanged(new APIEventArgs("Final avg fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
             OnChanged(new APIEventArgs("Initial best fitness: ", false,ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
             OnChanged(new APIEventArgs("Overall best fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString(), true));
+
+            if (lo_thread != null)
+            {
+                lo_thread.Abort();
+            }
         }
 
         private bool ContinueGA(ref int ai_generation)

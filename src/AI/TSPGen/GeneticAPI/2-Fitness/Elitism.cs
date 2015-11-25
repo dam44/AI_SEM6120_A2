@@ -8,7 +8,7 @@ namespace GeneticAPI.Fitness
 {
     public class Elitism<T> where T : IData
     {
-        public static void MarkElite(Chromosome<T>[] ao_pop, Chromosome<T>[] ao_newpop)
+        public static void MarkElite(Chromosome<T>[] ao_pop)
         {
             Chromosome<T>[] lo_elites = new Chromosome<T>[Globals<T>.ELITENUM];
             bool lb_full = false;
@@ -48,13 +48,7 @@ namespace GeneticAPI.Fitness
                 }
             }
             //Mark the best chromosomes as elite.
-            for (int i = 0; i < Globals<T>.ELITENUM; i++)
-            {
-                if (lo_elites[i] != null)
-                {
-                    ao_newpop[i] = (lo_elites[i]);
-                }
-            }
+            Globals<T>.ELITES = lo_elites;
         }
     }
 }

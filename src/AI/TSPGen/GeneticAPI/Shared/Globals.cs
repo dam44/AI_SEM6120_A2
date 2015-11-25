@@ -21,6 +21,14 @@ namespace GeneticAPI
         public static GARandom RAND { get; set; }
         public static int ELITENUM { get; set; }
 
+        public static Chromosome<T>[] ELITES { get; set; }
+
+        public static bool ADAPTMUT { get; set; }
+
+        public static bool ROG { get; set; }
+
+        public static bool SROG { get; set; }
+
         public static ConcurrentPriorityQueue<Chromosome<T>> CPQ;
     }
 }

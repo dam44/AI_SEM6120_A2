@@ -8,7 +8,9 @@ namespace GeneticAPI.Selection
 {
     public enum Selectors
     {
-        Roulette = 0,
-        Tournament = 1,
+        Tournament = 0,
+        Roulette = 1,
+        Rank = 2,
+
     }
 }

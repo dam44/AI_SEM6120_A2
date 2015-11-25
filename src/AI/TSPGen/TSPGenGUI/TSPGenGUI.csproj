@@ -57,6 +57,9 @@
     <Compile Include="GA.cs" />
     <Compile Include="GARun.cs" />
     <Compile Include="GUIGAEvent.cs" />
+    <Compile Include="JSONOutput\Overall.cs" />
+    <Compile Include="JSONOutput\Run.cs" />
+    <Compile Include="JSONOutput\Wrapper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,6 +1,10 @@
 ﻿using GeneticAPI;
+using GeneticAPI.Recombination;
+using GeneticAPI.Selection;
+using GeneticAPI.Shared.Util;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using TSPGenGUI.JSONOutput;
 using TSPModel;
 
 namespace TSPGenGUI
@@ -22,11 +27,15 @@ namespace TSPGenGUI
         private BindingList<GARun> io_runs;
         private Thread io_gathread;
         private List<string> SERIES;
+        private Wrapper io_wrapper;
 
       
         public MainForm()
         {
             InitializeComponent();
+            io_wrapper = new Wrapper();
+            io_wrapper.overall = new Overall();
+            io_wrapper.runs = new List<Run>();
 
             io_runs = new BindingList<GARun>();
             lbox_runs.DataSource = io_runs;
@@ -36,6 +45,12 @@ namespace TSPGenGUI
             string[] lo_series = { "Average Fitness", "Best Fitness" };
             cbl_data.Items.AddRange(lo_series);
 
+            comb_rand.DataSource = Enum.GetValues(typeof(Randoms));
+            comb_recom.DataSource = Enum.GetValues(typeof(Recombinators));
+            comb_selector.DataSource = Enum.GetValues(typeof(Selectors));
+            for (int i = 0; i < cbl_data.Items.Count; i++) {
+                cbl_data.SetItemChecked(i, true);
+            }
         }
 
         delegate void UpdateGraphCallback(string as_series, double ad_fitness);
@@ -166,27 +181,11 @@ namespace TSPGenGUI
             }
             else
             {
-                //for (int h = 0; h < io_runs.Count; h++)
-                //{
                 try
                 {
                     GA lo_ga = new GA();
-
+                    lo_ga.init(io_runs[0], ref io_wrapper);
                     io_gathread = new Thread(lo_ga.StartGA);
-                    lo_ga.init(io_runs[0]);
-                    //lo_ga.init
-                    //    (
-                    //        (int)nud_avgovr.Value,
-                    //        PATH,
-                    //        (int)nud_pool.Value,
-                    //        (int)nud_gen.Value,
-                    //        (double)nud_mutp.Value,
-                    //        (double)nud_crossp.Value,
-                    //        GeneticAPI.Selection.Selectors.Tournament,
-                    //        GeneticAPI.Shared.Util.Randoms.Advanced,
-                    //        (int)nud_elites.Value,
-                    //        (int)nud_conts.Value
-                    //    );
                     lo_ga.ChartUpdate += new ChartEventHandler(Changed);
 
                     cha_line_ga.Series.Clear();
@@ -200,7 +199,6 @@ namespace TSPGenGUI
                     }
                     runindex++;
                     io_gathread.Start();
-                    //}
                 }
                 catch (Exception e)
                 {
@@ -223,16 +221,7 @@ namespace TSPGenGUI
                 }
                 else
                 {
-                    //Document lo_doc = new Document(iTextSharp.text.PageSize.LETTER, 10, 10, 42, 35);
-                    //PdfWriter lo_wri = PdfWriter.GetInstance(lo_doc, new FileStream("Test.pdf", FileMode.Create));
-                    //lo_doc.Open();
-
-                    //var lo_charImage = new MemoryStream();
                     cha_line_ga.SaveImage(ls_filename, ChartImageFormat.Png);
-                    //iTextSharp.text.Image lo_image = iTextSharp.text.Image.GetInstance(lo_charImage);
-                    //lo_doc.Add(lo_image);
-
-                    //lo_doc.Close();
                 }
             }
             catch (Exception e)
@@ -254,21 +243,46 @@ namespace TSPGenGUI
         private void btn_add_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrWhiteSpace(tb_path.Text)) return;
+
+            Selectors len_selector;
+            Enum.TryParse<Selectors>(comb_selector.SelectedValue.ToString(), out len_selector);
+
+            Recombinators len_recomb;
+            Enum.TryParse <Recombinators>(comb_recom.SelectedValue.ToString(), out len_recomb);
+
+            Randoms len_rands;
+            Enum.TryParse<Randoms>(comb_rand.SelectedValue.ToString(), out len_rands);
             io_runs.Add(new GARun(
-                        GeneticAPI.Recombination.Recombinators.TwoPointCrossoverPMX,
                         (int)nud_avgovr.Value,
                         tb_path.Text,
                         (int)nud_pool.Value,
                         (int)nud_gen.Value,
                         (double)nud_mutp.Value,
                         (double)nud_crossp.Value,
-                        GeneticAPI.Selection.Selectors.Tournament,
-                        GeneticAPI.Shared.Util.Randoms.Advanced,
+                        len_selector,
+                        len_recomb,
+                        len_rands,
                         (int)nud_elites.Value,
-                        (int)nud_conts.Value
+                        (int)nud_conts.Value,
+                        cb_adapmut.Checked,
+                        cb_rog.Checked,
+                        cb_srog.Checked
                 ));
             //lbox_runs.Data
             //lbox_runs.Update();
+        }
+
+
+        private void btn_log_Click(object sender, EventArgs e)
+        {
+            io_wrapper.overall.init(io_wrapper.runs);
+
+            string ls_json = JsonConvert.SerializeObject(io_wrapper);
+
+            using (StreamWriter lo_outstream = new StreamWriter(@"Runs/RunDetails.json"))
+            {
+                lo_outstream.Write(ls_json);
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -323,6 +337,16 @@ namespace TSPGenGUI
         }
 
         private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
         {
 
         }

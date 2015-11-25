@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.cha_line_ga = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btn_start = new System.Windows.Forms.Button();
             this.btn_data_path = new System.Windows.Forms.Button();
@@ -61,6 +61,19 @@
             this.btn_add = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.lb_bestc = new System.Windows.Forms.Label();
+            this.comb_selector = new System.Windows.Forms.ComboBox();
+            this.comb_recom = new System.Windows.Forms.ComboBox();
+            this.cb_adapmut = new System.Windows.Forms.CheckBox();
+            this.cb_rog = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.cb_srog = new System.Windows.Forms.CheckBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.comb_rand = new System.Windows.Forms.ComboBox();
+            this.btn_log = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.cha_line_ga)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_avgovr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_pool)).BeginInit();
@@ -73,10 +86,10 @@
             // 
             // cha_line_ga
             // 
-            chartArea1.Name = "ChartArea1";
-            this.cha_line_ga.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.cha_line_ga.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.cha_line_ga.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.cha_line_ga.Legends.Add(legend2);
             this.cha_line_ga.Location = new System.Drawing.Point(36, 25);
             this.cha_line_ga.Name = "cha_line_ga";
             this.cha_line_ga.Size = new System.Drawing.Size(868, 493);
@@ -85,9 +98,9 @@
             // 
             // btn_start
             // 
-            this.btn_start.Location = new System.Drawing.Point(784, 540);
+            this.btn_start.Location = new System.Drawing.Point(1302, 476);
             this.btn_start.Name = "btn_start";
-            this.btn_start.Size = new System.Drawing.Size(120, 32);
+            this.btn_start.Size = new System.Drawing.Size(93, 32);
             this.btn_start.TabIndex = 1;
             this.btn_start.Text = "Go";
             this.btn_start.UseVisualStyleBackColor = true;
@@ -373,7 +386,7 @@
             // 
             // btn_stop
             // 
-            this.btn_stop.Location = new System.Drawing.Point(685, 540);
+            this.btn_stop.Location = new System.Drawing.Point(1302, 438);
             this.btn_stop.Name = "btn_stop";
             this.btn_stop.Size = new System.Drawing.Size(93, 32);
             this.btn_stop.TabIndex = 25;
@@ -401,7 +414,7 @@
             // 
             // btn_add
             // 
-            this.btn_add.Location = new System.Drawing.Point(1119, 540);
+            this.btn_add.Location = new System.Drawing.Point(1302, 400);
             this.btn_add.Name = "btn_add";
             this.btn_add.Size = new System.Drawing.Size(95, 32);
             this.btn_add.TabIndex = 28;
@@ -427,11 +440,146 @@
             this.lb_bestc.TabIndex = 30;
             this.lb_bestc.Text = "?";
             // 
+            // comb_selector
+            // 
+            this.comb_selector.FormattingEnabled = true;
+            this.comb_selector.Location = new System.Drawing.Point(1323, 118);
+            this.comb_selector.Name = "comb_selector";
+            this.comb_selector.Size = new System.Drawing.Size(143, 24);
+            this.comb_selector.TabIndex = 31;
+            // 
+            // comb_recom
+            // 
+            this.comb_recom.FormattingEnabled = true;
+            this.comb_recom.Location = new System.Drawing.Point(1323, 145);
+            this.comb_recom.Name = "comb_recom";
+            this.comb_recom.Size = new System.Drawing.Size(143, 24);
+            this.comb_recom.TabIndex = 32;
+            // 
+            // cb_adapmut
+            // 
+            this.cb_adapmut.AutoSize = true;
+            this.cb_adapmut.Checked = true;
+            this.cb_adapmut.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_adapmut.Cursor = System.Windows.Forms.Cursors.Default;
+            this.cb_adapmut.Location = new System.Drawing.Point(1443, 212);
+            this.cb_adapmut.Name = "cb_adapmut";
+            this.cb_adapmut.Size = new System.Drawing.Size(18, 17);
+            this.cb_adapmut.TabIndex = 33;
+            this.cb_adapmut.UseVisualStyleBackColor = true;
+            // 
+            // cb_rog
+            // 
+            this.cb_rog.AutoSize = true;
+            this.cb_rog.Location = new System.Drawing.Point(1443, 240);
+            this.cb_rog.Name = "cb_rog";
+            this.cb_rog.Size = new System.Drawing.Size(18, 17);
+            this.cb_rog.TabIndex = 34;
+            this.cb_rog.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(1212, 149);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(102, 17);
+            this.label13.TabIndex = 35;
+            this.label13.Text = "Recombination";
+            this.label13.Click += new System.EventHandler(this.label13_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(1248, 122);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(66, 17);
+            this.label14.TabIndex = 36;
+            this.label14.Text = "Selection";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(1316, 211);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(121, 17);
+            this.label15.TabIndex = 37;
+            this.label15.Text = "Adaptive Mutation";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(1239, 237);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(198, 17);
+            this.label16.TabIndex = 38;
+            this.label16.Text = "Random Offspring Generation";
+            // 
+            // cb_srog
+            // 
+            this.cb_srog.AutoSize = true;
+            this.cb_srog.Checked = true;
+            this.cb_srog.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_srog.Location = new System.Drawing.Point(1443, 264);
+            this.cb_srog.Name = "cb_srog";
+            this.cb_srog.Size = new System.Drawing.Size(18, 17);
+            this.cb_srog.TabIndex = 39;
+            this.cb_srog.UseVisualStyleBackColor = true;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(1265, 263);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(169, 17);
+            this.label17.TabIndex = 40;
+            this.label17.Text = "Super Turbo Sports ROG";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(1248, 95);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(61, 17);
+            this.label18.TabIndex = 42;
+            this.label18.Text = "Random";
+            // 
+            // comb_rand
+            // 
+            this.comb_rand.FormattingEnabled = true;
+            this.comb_rand.Location = new System.Drawing.Point(1323, 91);
+            this.comb_rand.Name = "comb_rand";
+            this.comb_rand.Size = new System.Drawing.Size(143, 24);
+            this.comb_rand.TabIndex = 41;
+            // 
+            // btn_log
+            // 
+            this.btn_log.Location = new System.Drawing.Point(1302, 514);
+            this.btn_log.Name = "btn_log";
+            this.btn_log.Size = new System.Drawing.Size(93, 32);
+            this.btn_log.TabIndex = 43;
+            this.btn_log.Text = "Log Runs";
+            this.btn_log.UseVisualStyleBackColor = true;
+            this.btn_log.Click += new System.EventHandler(this.btn_log_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1226, 584);
+            this.ClientSize = new System.Drawing.Size(1504, 584);
+            this.Controls.Add(this.btn_log);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.comb_rand);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.cb_srog);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.cb_rog);
+            this.Controls.Add(this.cb_adapmut);
+            this.Controls.Add(this.comb_recom);
+            this.Controls.Add(this.comb_selector);
             this.Controls.Add(this.lb_bestc);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.btn_add);
@@ -511,6 +659,19 @@
         private System.Windows.Forms.Button btn_add;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label lb_bestc;
+        private System.Windows.Forms.ComboBox comb_selector;
+        private System.Windows.Forms.ComboBox comb_recom;
+        private System.Windows.Forms.CheckBox cb_adapmut;
+        private System.Windows.Forms.CheckBox cb_rog;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.CheckBox cb_srog;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox comb_rand;
+        private System.Windows.Forms.Button btn_log;
     }
 }
 

@@ -23,6 +23,7 @@ namespace GeneticAPI.Fitness
             {
                 ld_totalfitness += Evaluate(ao_order[i].data, ao_order[i + 1].data);
             }
+            ld_totalfitness += Evaluate(ao_order[ao_order.Count - 1].data, ao_order[0].data);
 
             return ld_totalfitness;
         }

@@ -14,7 +14,6 @@ namespace TSPGenGUI
         private static int id = 0;
         private int myid = 0;
 
-        public Recombinators ien_recomtype { get; set; }
         public int ii_recpergen { get; }
         public string ii_path { get; }
         public int ii_poolsize { get; }
@@ -22,12 +21,16 @@ namespace TSPGenGUI
         public double id_modifyprob { get; }
         public double id_recomprob { get; }
         public Selectors ien_selector { get; }
+        public Recombinators ien_recomb { get; }
         public Randoms ien_random { get; }
         public int ii_elites { get; }
-        public int ii_ts_contestants {get;}
+        public int ii_ts_contestants { get; }
+
+        public bool ib_adaptivemut { get; }
+        public bool ib_rog {get;}
+        public bool ib_srog { get; }
 
         public GARun(
-                Recombinators aen_recomtype,
                 int ai_recpergen,
                 string as_path,
                 int ai_poolsize,
@@ -35,12 +38,15 @@ namespace TSPGenGUI
                 double ad_modifyprob,
                 double ad_recomprob,
                 Selectors aen_selector,
+                Recombinators aen_recomb,
                 Randoms aen_random,
                 int ai_elites = 1,
-                int ai_ts_contestants = 2
+                int ai_ts_contestants = 2,
+                bool ab_adaptivemut = true,
+                bool ab_rog = false,
+                bool ab_srog = true
             )
         {
-            ien_recomtype = aen_recomtype;
             ii_recpergen = ai_recpergen;
             ii_path = as_path;
             ii_poolsize = ai_poolsize;
@@ -48,9 +54,13 @@ namespace TSPGenGUI
             id_modifyprob = ad_modifyprob;
             id_recomprob = ad_recomprob;
             ien_selector = aen_selector;
+            ien_recomb = aen_recomb;
             ien_random = aen_random;
             ii_elites = ai_elites;
             ii_ts_contestants = ai_ts_contestants;
+            ib_adaptivemut = ab_adaptivemut;
+            ib_rog = ab_rog;
+            ib_srog = ab_srog;
             id = id + 1;
             myid = id;
         }

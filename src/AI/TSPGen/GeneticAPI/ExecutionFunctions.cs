@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GeneticAPI.Selection.Rank;
 
 namespace GeneticAPI
 {
@@ -38,12 +39,15 @@ namespace GeneticAPI
             if (aen_selector == Selectors.Roulette)
             {
                lo_selector = new Roulette<T>(ao_pop);
+            } else if (aen_selector == Selectors.Rank)
+            {
+                lo_selector = new Rank<T>(ao_pop);
             } else
             {
                 lo_selector = new Tournament<T>(ao_pop, ai_ts_contestants);
             }
 
-            for (int i = Globals<T>.ELITENUM; i < Globals<T>.POOLSIZE; i++)
+            for (int i = 0; i < Globals<T>.POOLSIZE; i++)
             {
                 Chromosome<T> temp = lo_selector.MakeSelection();
                 ao_newpop[i] = temp;
@@ -77,6 +81,7 @@ namespace GeneticAPI
             for (int i = 0; i < Globals<T>.POOLSIZE; i++)
             {
                 ld_tfitness += ao_pop[i].fitness;
+
                 if (ao_pop[i].fitness < ad_bestfitness || ad_bestfitness == 0)
                 {
                     ad_bestfitness = ao_pop[i].fitness;
@@ -100,10 +105,40 @@ namespace GeneticAPI
             }
 
             ad_fitness = (ld_tfitness / ao_pop.Length);
+            GeneticAPI.Fitness.Elitism<T>.MarkElite(ao_pop);
         }
 
-        public static void EvaluateElite(Chromosome<T>[] ao_pop, Chromosome<T>[] ao_newpop) {
-            GeneticAPI.Fitness.Elitism<T>.MarkElite(ao_pop, ao_newpop);
+        public static void EvaluateElite(Chromosome<T>[] ao_pop) {
+            if (Globals<T>.ELITES == null) return;
+
+            List<int> li_alreadypresent = new List<int>();
+            for (int i = 0; i < ao_pop.Length; i++)
+            {
+                for (int j = 0; j < Globals<T>.ELITES.Length; j++)
+                {
+                    if (ao_pop[i].fitness == Globals<T>.ELITES[j].fitness)
+                    {
+                        li_alreadypresent.Add(j);
+                    }
+                }
+            }
+            for (int i = 0; i < Globals<T>.ELITES.Length; i++)
+            {
+                if (li_alreadypresent.Contains(i)) continue;
+                int index = 0;
+                for (int j = 0; j < ao_pop.Length; j++)
+                {
+                    for (int k = 0; k < ao_pop.Length; k++)
+                    {
+                        if (ao_pop[j].fitness < ao_pop[k].fitness)
+                        {
+                            index = j;
+                        }
+                    }
+                }
+                ao_pop[index] = Globals<T>.ELITES[i];
+            }
+
         }
     }
 }
