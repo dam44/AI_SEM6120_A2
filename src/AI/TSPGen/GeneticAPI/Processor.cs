@@ -22,6 +22,7 @@ namespace GeneticAPI
     public class Processor<T> where T : IData
     {
         public event ChangedEventHandler Changed;
+        public static Thread io_thread = null;
 
         protected virtual void OnChanged(APIEventArgs e)
         {
@@ -77,13 +78,12 @@ namespace GeneticAPI
             double ld_inifitness = 0;
             int li_generation = 0;
 
-            Thread lo_thread = null;
-            if (Globals<T>.SROG)
+            if (Globals<T>.SROG && io_thread == null)
             {
                 Globals<T>.CPQ = new ConcurrentPriorityQueue<Chromosome<T>>(100);
                 SuperSeed<T> lo_seeder = new SuperSeed<T>(ref Globals<T>.CPQ);
-                lo_thread = new Thread(new ThreadStart(lo_seeder.Run));
-                lo_thread.Start();
+                io_thread = new Thread(new ThreadStart(lo_seeder.Run));
+                io_thread.Start();
             }
 
 
@@ -110,10 +110,10 @@ namespace GeneticAPI
             OnChanged(new APIEventArgs("Initial best fitness: ", false,ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
             OnChanged(new APIEventArgs("Overall best fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString(), true));
 
-            if (lo_thread != null)
-            {
-                lo_thread.Abort();
-            }
+            //if (lo_thread != null)
+            //{
+            //    lo_thread.Abort();
+            //}
         }
 
         private bool ContinueGA(ref int ai_generation)

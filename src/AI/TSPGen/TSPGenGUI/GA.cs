@@ -39,6 +39,8 @@ namespace TSPGenGUI
         private int ii_reccount;
         private int ii_gencount;
         private Wrapper io_wrapper;
+        private long il_msgcount = 0;
+        private string is_bestchrom;
         public void StartGA()
         {
 
@@ -122,9 +124,11 @@ namespace TSPGenGUI
 
         private void Changed(object sender, GeneticAPI.Events.APIEventArgs e)
         {
+            
             ii_reccount++;
             id_avgavg += e.avgfitness;
             id_avgavgavg += e.avgfitness;
+            il_msgcount++;
             //id_avgbest += e.bestfitness;
             ii_gencount++;
             if (e.finished)
@@ -134,11 +138,12 @@ namespace TSPGenGUI
             if (ii_reccount >= ii_recpergen)
             {
                 e.avgfitness = (id_avgavg / ii_reccount);
+                
                 //e.bestfitness = (id_best / ii_reccount);
                 id_best = e.bestfitness;
+                is_bestchrom = e.bestchrom;
                 ii_reccount = 0;
                 id_avgavg = 0;
-                id_best = 0;
                 GUIGAEvent gui_e = new GUIGAEvent(e, ii_gencount);
                 OnChartUpdate(gui_e);
             }
@@ -148,7 +153,7 @@ namespace TSPGenGUI
         {
             if (io_run == null) return;
 
-            io_wrapper.runs.Add(new Run(io_run, id_avgavgavg, id_best));
+            io_wrapper.runs.Add(new Run(io_run, id_avgavgavg/il_msgcount, id_best, is_bestchrom));
         }
 
         protected virtual void OnChartUpdate(GUIGAEvent e)

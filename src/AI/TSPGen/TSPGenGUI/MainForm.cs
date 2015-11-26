@@ -279,7 +279,7 @@ namespace TSPGenGUI
 
             string ls_json = JsonConvert.SerializeObject(io_wrapper);
 
-            using (StreamWriter lo_outstream = new StreamWriter(@"Runs/RunDetails.json"))
+            using (StreamWriter lo_outstream = new StreamWriter(@"Results/RunDetails.json"))
             {
                 lo_outstream.Write(ls_json);
             }

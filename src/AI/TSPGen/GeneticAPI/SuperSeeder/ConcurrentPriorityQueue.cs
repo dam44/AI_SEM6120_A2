@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GeneticAPI.SuperSeeder
@@ -38,6 +39,10 @@ namespace GeneticAPI.SuperSeeder
                     io_cpq.Add(item);
                     return;
                 }
+                if (io_cpq.Count == 1)
+                {
+                    Monitor.PulseAll(io_cpq);
+                }
             }
 
         }
@@ -46,6 +51,10 @@ namespace GeneticAPI.SuperSeeder
         {
             lock (io_cpq)
             {
+                if (io_cpq.Count == 0)
+                {
+                    Monitor.Wait(io_cpq);
+                }
                 T lo_ret = io_cpq[0];
                 io_cpq.RemoveAt(0);
                 return lo_ret;

@@ -11,45 +11,51 @@ namespace TSPGenGUI.JSONOutput
 {
     public class Run
     {
+        public string route { get; }
+
+        public string name { get; }
         public double average { get; }
         public double best { get; }
-        public int ii_recpergen { get; }
-        public string ii_path { get; }
-        public int ii_poolsize { get; }
-        public int ii_generations { get; }
-        public double id_modifyprob { get; }
-        public double id_recomprob { get; }
-        public Selectors ien_selector { get; }
-        public Recombinators ien_recomb { get; }
-        public Randoms ien_random { get; }
-        public int ii_elites { get; }
-        public int ii_ts_contestants { get; }
-        public bool ib_adaptivemut { get; }
-        public bool ib_rog { get; }
-        public bool ib_srog { get; }
+        public int recpergen { get; }
+        public string path { get; }
+        public int poolsize { get; }
+        public int generations { get; }
+        public double modifyprob { get; }
+        public double recomprob { get; }
+        public Selectors selector { get; }
+        public Recombinators recomb { get; }
+        public Randoms random { get; }
+        public int elites { get; }
+        public int contestants { get; }
+        public bool adaptivemut { get; }
+        public bool rog { get; }
+        public bool srog { get; }
 
         public Run()
         {
 
         }
-        public Run(GARun ao_run, double ad_average, double ad_best)
+        public Run(GARun ao_run, double ad_average, double ad_best, string as_route)
         {
+            route = as_route;
+            name = ao_run.FileName();
             average = ad_average;
             best = ad_best;
-            ii_recpergen = ao_run.ii_recpergen;
-            ii_path = ao_run.ii_path;
-            ii_poolsize = ao_run.ii_poolsize;
-            ii_generations = ao_run.ii_generations;
-            id_modifyprob = ao_run.id_modifyprob;
-            id_recomprob = ao_run.id_recomprob;
-            ien_selector = ao_run.ien_selector;
-            ien_recomb = ao_run.ien_recomb;
-            ien_random = ao_run.ien_random;
-            ii_elites = ao_run.ii_elites;
-            ii_ts_contestants = ao_run.ii_ts_contestants;
-            ib_adaptivemut = ao_run.ib_adaptivemut;
-            ib_rog = ao_run.ib_rog;
-            ib_srog = ao_run.ib_srog;
+            recpergen = ao_run.ii_recpergen;
+            path = ao_run.ii_path;
+            poolsize = ao_run.ii_poolsize;
+            generations = ao_run.ii_generations;
+            modifyprob = ao_run.id_modifyprob;
+            recomprob = ao_run.id_recomprob;
+            selector = ao_run.ien_selector;
+            recomb = ao_run.ien_recomb;
+            random = ao_run.ien_random;
+            elites = ao_run.ii_elites;
+            contestants = ao_run.ii_ts_contestants;
+            adaptivemut = ao_run.ib_adaptivemut;
+            rog = ao_run.ib_rog;
+            srog = ao_run.ib_srog;
+            
 
         }
     }
