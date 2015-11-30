@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GeneticAPI.SuperSeeder;
+using GeneticAPI.SuperROG;
 using System.Threading;
 
 namespace GeneticAPI
@@ -81,7 +81,7 @@ namespace GeneticAPI
             if (Globals<T>.SROG && io_thread == null)
             {
                 Globals<T>.CPQ = new ConcurrentPriorityQueue<Chromosome<T>>(100);
-                SuperSeed<T> lo_seeder = new SuperSeed<T>(ref Globals<T>.CPQ);
+                SuperROG<T> lo_seeder = new SuperROG<T>(ref Globals<T>.CPQ);
                 io_thread = new Thread(new ThreadStart(lo_seeder.Run));
                 io_thread.Start();
             }

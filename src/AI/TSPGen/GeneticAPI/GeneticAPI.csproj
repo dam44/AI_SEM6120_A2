@@ -54,7 +54,7 @@
     <Compile Include="4-Recombination\Crossover\PMX\TwoPointCrossoverPMX.cs" />
     <Compile Include="4-Recombination\Recombinators.cs" />
     <Compile Include="5-Modification\Modification.cs" />
-    <Compile Include="5-Modification\Mutation\PMX\MutationPMX.cs" />
+    <Compile Include="5-Modification\Mutation\PMX\MutationImpl.cs" />
     <Compile Include="Events\APIEventArgs.cs" />
     <Compile Include="ExecutionFunctions.cs" />
     <Compile Include="Shared\Util\AdvRandom.cs" />
@@ -76,8 +76,8 @@
     <Compile Include="Shared\NotableChromosomes.cs" />
     <Compile Include="Shared\Util\Randoms.cs" />
     <Compile Include="Shared\Util\Util.cs" />
-    <Compile Include="SuperSeeder\ConcurrentPriorityQueue.cs" />
-    <Compile Include="SuperSeeder\SuperSeed.cs" />
+    <Compile Include="SuperROG\ConcurrentPriorityQueue.cs" />
+    <Compile Include="SuperROG\SuperROG.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

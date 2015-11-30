@@ -69,7 +69,7 @@ namespace GeneticAPI
 
         public static void Modification(Chromosome<T>[] ao_pop)
         {
-            Modification<T> lo_modif = new MutationPMX<T>();
+            Modification<T> lo_modif = new MutationImpl<T>();
             lo_modif.MutatePopulation(ao_pop);
         }
 

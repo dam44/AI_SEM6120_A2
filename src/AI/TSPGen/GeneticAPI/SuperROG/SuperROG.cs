@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAPI.SuperSeeder
+namespace GeneticAPI.SuperROG
 {
-    public class SuperSeed<T> where T : IData
+    public class SuperROG<T> where T : IData
     {
         private ConcurrentPriorityQueue<Chromosome<T>> io_cpq;
-        public SuperSeed(ref ConcurrentPriorityQueue<Chromosome<T>> ao_cpq)
+        public SuperROG(ref ConcurrentPriorityQueue<Chromosome<T>> ao_cpq)
         {
             this.io_cpq = ao_cpq;
         }

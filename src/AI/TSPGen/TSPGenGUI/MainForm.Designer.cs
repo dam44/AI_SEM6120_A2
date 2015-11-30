@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.cha_line_ga = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btn_start = new System.Windows.Forms.Button();
             this.btn_data_path = new System.Windows.Forms.Button();
@@ -86,10 +86,10 @@
             // 
             // cha_line_ga
             // 
-            chartArea2.Name = "ChartArea1";
-            this.cha_line_ga.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.cha_line_ga.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.cha_line_ga.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.cha_line_ga.Legends.Add(legend1);
             this.cha_line_ga.Location = new System.Drawing.Point(36, 25);
             this.cha_line_ga.Name = "cha_line_ga";
             this.cha_line_ga.Size = new System.Drawing.Size(868, 493);
@@ -612,7 +612,7 @@
             this.Controls.Add(this.btn_start);
             this.Controls.Add(this.cha_line_ga);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Genetic Algorithm GUI";
             ((System.ComponentModel.ISupportInitialize)(this.cha_line_ga)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_avgovr)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_pool)).EndInit();

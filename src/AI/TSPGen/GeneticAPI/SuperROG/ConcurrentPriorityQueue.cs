@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GeneticAPI.SuperSeeder
+namespace GeneticAPI.SuperROG
 {
     public class ConcurrentPriorityQueue<T> where T : IComparable<T>
     {

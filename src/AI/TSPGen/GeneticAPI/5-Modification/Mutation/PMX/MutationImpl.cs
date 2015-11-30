@@ -9,7 +9,7 @@ using GeneticAPI.Shared.Util;
 
 namespace GeneticAPI._5_Modification.Mutation.PMX
 {
-    public class MutationPMX<T> : Mutation<T> where T : IData
+    public class MutationImpl<T> : Mutation<T> where T : IData
     {
         public override Chromosome<T>[] ModifyChildren(Chromosome<T>[] ao_parent)
         {
