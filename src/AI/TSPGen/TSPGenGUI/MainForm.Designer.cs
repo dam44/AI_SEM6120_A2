@@ -149,7 +149,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(913, 91);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(162, 17);
+            this.label1.Size = new System.Drawing.Size(153, 16);
             this.label1.TabIndex = 6;
             this.label1.Text = "Record Per Generations";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -177,7 +177,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(1008, 118);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 17);
+            this.label2.Size = new System.Drawing.Size(65, 16);
             this.label2.TabIndex = 8;
             this.label2.Text = "Pool Size";
             // 
@@ -208,7 +208,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(989, 149);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(86, 17);
+            this.label3.Size = new System.Drawing.Size(81, 16);
             this.label3.TabIndex = 10;
             this.label3.Text = "Generations";
             // 
@@ -229,7 +229,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(1033, 178);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(42, 17);
+            this.label4.Size = new System.Drawing.Size(41, 16);
             this.label4.TabIndex = 12;
             this.label4.Text = "Elites";
             // 
@@ -255,7 +255,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(992, 207);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(83, 17);
+            this.label5.Size = new System.Drawing.Size(78, 16);
             this.label5.TabIndex = 14;
             this.label5.Text = "Contestants";
             // 
@@ -287,7 +287,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(943, 235);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(132, 17);
+            this.label6.Size = new System.Drawing.Size(125, 16);
             this.label6.TabIndex = 16;
             this.label6.Text = "Mutation Probability";
             // 
@@ -296,7 +296,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(933, 266);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(142, 17);
+            this.label7.Size = new System.Drawing.Size(137, 16);
             this.label7.TabIndex = 18;
             this.label7.Text = "Crossover Probability";
             this.label7.Click += new System.EventHandler(this.label7_Click);
@@ -329,7 +329,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(989, 298);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(83, 17);
+            this.label8.Size = new System.Drawing.Size(77, 16);
             this.label8.TabIndex = 19;
             this.label8.Text = "Generation:";
             this.label8.Click += new System.EventHandler(this.label8_Click);
@@ -339,7 +339,7 @@
             this.lb_gen.AutoSize = true;
             this.lb_gen.Location = new System.Drawing.Point(1081, 298);
             this.lb_gen.Name = "lb_gen";
-            this.lb_gen.Size = new System.Drawing.Size(16, 17);
+            this.lb_gen.Size = new System.Drawing.Size(15, 16);
             this.lb_gen.TabIndex = 20;
             this.lb_gen.Text = "?";
             this.lb_gen.Click += new System.EventHandler(this.lb_gen_Click);
@@ -349,7 +349,7 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(919, 317);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(156, 17);
+            this.label10.Size = new System.Drawing.Size(148, 16);
             this.label10.TabIndex = 21;
             this.label10.Text = "Population Avg Fitness:";
             this.label10.Click += new System.EventHandler(this.label10_Click);
@@ -359,7 +359,7 @@
             this.lb_pavfit.AutoSize = true;
             this.lb_pavfit.Location = new System.Drawing.Point(1081, 317);
             this.lb_pavfit.Name = "lb_pavfit";
-            this.lb_pavfit.Size = new System.Drawing.Size(16, 17);
+            this.lb_pavfit.Size = new System.Drawing.Size(15, 16);
             this.lb_pavfit.TabIndex = 22;
             this.lb_pavfit.Text = "?";
             this.lb_pavfit.Click += new System.EventHandler(this.lb_pavfit_Click);
@@ -369,7 +369,7 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(983, 335);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(89, 17);
+            this.label12.Size = new System.Drawing.Size(84, 16);
             this.label12.TabIndex = 23;
             this.label12.Text = "Best Fitness:";
             this.label12.Click += new System.EventHandler(this.label12_Click);
@@ -379,7 +379,7 @@
             this.lb_bestfit.AutoSize = true;
             this.lb_bestfit.Location = new System.Drawing.Point(1081, 336);
             this.lb_bestfit.Name = "lb_bestfit";
-            this.lb_bestfit.Size = new System.Drawing.Size(16, 17);
+            this.lb_bestfit.Size = new System.Drawing.Size(15, 16);
             this.lb_bestfit.TabIndex = 24;
             this.lb_bestfit.Text = "?";
             this.lb_bestfit.Click += new System.EventHandler(this.lb_bestfit_Click);
@@ -408,7 +408,7 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(910, 377);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(41, 17);
+            this.label9.Size = new System.Drawing.Size(39, 16);
             this.label9.TabIndex = 27;
             this.label9.Text = "Runs";
             // 
@@ -427,7 +427,7 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(987, 353);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(85, 17);
+            this.label11.Size = new System.Drawing.Size(80, 16);
             this.label11.TabIndex = 29;
             this.label11.Text = "Best Chrom:";
             // 
@@ -436,7 +436,7 @@
             this.lb_bestc.AutoSize = true;
             this.lb_bestc.Location = new System.Drawing.Point(1081, 353);
             this.lb_bestc.Name = "lb_bestc";
-            this.lb_bestc.Size = new System.Drawing.Size(16, 17);
+            this.lb_bestc.Size = new System.Drawing.Size(15, 16);
             this.lb_bestc.TabIndex = 30;
             this.lb_bestc.Text = "?";
             // 
@@ -464,7 +464,7 @@
             this.cb_adapmut.Cursor = System.Windows.Forms.Cursors.Default;
             this.cb_adapmut.Location = new System.Drawing.Point(1443, 212);
             this.cb_adapmut.Name = "cb_adapmut";
-            this.cb_adapmut.Size = new System.Drawing.Size(18, 17);
+            this.cb_adapmut.Size = new System.Drawing.Size(15, 14);
             this.cb_adapmut.TabIndex = 33;
             this.cb_adapmut.UseVisualStyleBackColor = true;
             // 
@@ -473,7 +473,7 @@
             this.cb_rog.AutoSize = true;
             this.cb_rog.Location = new System.Drawing.Point(1443, 240);
             this.cb_rog.Name = "cb_rog";
-            this.cb_rog.Size = new System.Drawing.Size(18, 17);
+            this.cb_rog.Size = new System.Drawing.Size(15, 14);
             this.cb_rog.TabIndex = 34;
             this.cb_rog.UseVisualStyleBackColor = true;
             // 
@@ -482,7 +482,7 @@
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(1212, 149);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(102, 17);
+            this.label13.Size = new System.Drawing.Size(99, 16);
             this.label13.TabIndex = 35;
             this.label13.Text = "Recombination";
             this.label13.Click += new System.EventHandler(this.label13_Click);
@@ -492,7 +492,7 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(1248, 122);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(66, 17);
+            this.label14.Size = new System.Drawing.Size(64, 16);
             this.label14.TabIndex = 36;
             this.label14.Text = "Selection";
             this.label14.Click += new System.EventHandler(this.label14_Click);
@@ -502,7 +502,7 @@
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(1316, 211);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(121, 17);
+            this.label15.Size = new System.Drawing.Size(115, 16);
             this.label15.TabIndex = 37;
             this.label15.Text = "Adaptive Mutation";
             // 
@@ -511,7 +511,7 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(1239, 237);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(198, 17);
+            this.label16.Size = new System.Drawing.Size(185, 16);
             this.label16.TabIndex = 38;
             this.label16.Text = "Random Offspring Generation";
             // 
@@ -522,7 +522,7 @@
             this.cb_srog.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_srog.Location = new System.Drawing.Point(1443, 264);
             this.cb_srog.Name = "cb_srog";
-            this.cb_srog.Size = new System.Drawing.Size(18, 17);
+            this.cb_srog.Size = new System.Drawing.Size(15, 14);
             this.cb_srog.TabIndex = 39;
             this.cb_srog.UseVisualStyleBackColor = true;
             // 
@@ -531,7 +531,7 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(1265, 263);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(169, 17);
+            this.label17.Size = new System.Drawing.Size(158, 16);
             this.label17.TabIndex = 40;
             this.label17.Text = "Super Turbo Sports ROG";
             // 
@@ -540,7 +540,7 @@
             this.label18.AutoSize = true;
             this.label18.Location = new System.Drawing.Point(1248, 95);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(61, 17);
+            this.label18.Size = new System.Drawing.Size(60, 16);
             this.label18.TabIndex = 42;
             this.label18.Text = "Random";
             // 
@@ -611,6 +611,8 @@
             this.Controls.Add(this.btn_data_path);
             this.Controls.Add(this.btn_start);
             this.Controls.Add(this.cha_line_ga);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Genetic Algorithm GUI";
             ((System.ComponentModel.ISupportInitialize)(this.cha_line_ga)).EndInit();

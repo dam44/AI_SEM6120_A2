@@ -31,11 +31,13 @@ namespace TSPGenGUI.JSONOutput
         public bool rog { get; }
         public bool srog { get; }
 
+        public string runtime { get; }
+
         public Run()
         {
 
         }
-        public Run(GARun ao_run, double ad_average, double ad_best, string as_route)
+        public Run(GARun ao_run, double ad_average, double ad_best, string as_route, TimeSpan ats_runtime)
         {
             route = as_route;
             name = ao_run.FileName();
@@ -55,7 +57,7 @@ namespace TSPGenGUI.JSONOutput
             adaptivemut = ao_run.ib_adaptivemut;
             rog = ao_run.ib_rog;
             srog = ao_run.ib_srog;
-            
+            runtime = ats_runtime.ToString();
 
         }
     }

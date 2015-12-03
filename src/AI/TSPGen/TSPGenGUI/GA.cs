@@ -41,6 +41,8 @@ namespace TSPGenGUI
         private Wrapper io_wrapper;
         private long il_msgcount = 0;
         private string is_bestchrom;
+        private DateTime ida_starttime;
+        private TimeSpan its_runtime;
         public void StartGA()
         {
 
@@ -96,6 +98,7 @@ namespace TSPGenGUI
             ib_adaptivemut = ab_adaptivemut;
             ib_rog = ab_rog;
             ib_srog = ab_srog;
+            ida_starttime = new DateTime();
         }
 
         public void init
@@ -120,11 +123,15 @@ namespace TSPGenGUI
             ib_adaptivemut = ao_run.ib_adaptivemut;
             ib_rog = ao_run.ib_rog;
             ib_srog = ao_run.ib_srog;
+            ida_starttime = new DateTime();
         }
 
         private void Changed(object sender, GeneticAPI.Events.APIEventArgs e)
         {
-            
+            if (ida_starttime == DateTime.MinValue)
+            {
+                ida_starttime = DateTime.Now;
+            }
             ii_reccount++;
             id_avgavg += e.avgfitness;
             id_avgavgavg += e.avgfitness;
@@ -152,8 +159,8 @@ namespace TSPGenGUI
         public void Complete()
         {
             if (io_run == null) return;
-
-            io_wrapper.runs.Add(new Run(io_run, id_avgavgavg/il_msgcount, id_best, is_bestchrom));
+            its_runtime = DateTime.Now - ida_starttime;
+            io_wrapper.runs.Add(new Run(io_run, id_avgavgavg/il_msgcount, id_best, is_bestchrom, its_runtime));
         }
 
         protected virtual void OnChartUpdate(GUIGAEvent e)

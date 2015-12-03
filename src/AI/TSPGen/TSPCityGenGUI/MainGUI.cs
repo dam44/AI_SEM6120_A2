@@ -22,7 +22,7 @@ namespace TSPCityGenGUI
         {
             int li_num = (int)nud_citynum.Value;
             string ls_path = tb_path.Text;
-            TSPCityGenAPI.OutputFile lo_output = new TSPCityGenAPI.OutputFile(li_num, ls_path);
+            TSPCityGenAPI.OutputFile lo_output = new TSPCityGenAPI.OutputFile(li_num, ls_path, 0, (int)nud_maxX.Value, 0, (int)nud_maxY.Value);
             lo_output.Output();
         }
 
@@ -34,6 +34,11 @@ namespace TSPCityGenGUI
             lo_save.ShowDialog();
             tb_path.Text = lo_save.FileName;
            
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

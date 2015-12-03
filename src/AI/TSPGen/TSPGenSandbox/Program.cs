@@ -31,7 +31,7 @@ namespace TSPGenSandbox
 
             Processor<City> lo_processor = new Processor<City>();
             lo_processor.Changed += new ChangedEventHandler(Changed);
-            lo_processor.Execute(lo_data, 30, 200000, 0.001, 0.5, GeneticAPI.Selection.Selectors.Tournament, GeneticAPI.Shared.Util.Randoms.Advanced, 2, 4);
+            lo_processor.Execute(lo_data, 30, 200000, 0.001, 0.5, GeneticAPI.Selection.Selectors.Tournament,GeneticAPI.Recombination.Recombinators.TwoPointCrossoverPMX, GeneticAPI.Shared.Util.Randoms.Advanced, 2, 4);
         }
 
         private void Changed(object sender, GeneticAPI.Events.APIEventArgs e)
