@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.cha_line_ga = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btn_start = new System.Windows.Forms.Button();
             this.btn_data_path = new System.Windows.Forms.Button();
@@ -86,10 +86,10 @@
             // 
             // cha_line_ga
             // 
-            chartArea1.Name = "ChartArea1";
-            this.cha_line_ga.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.cha_line_ga.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.cha_line_ga.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.cha_line_ga.Legends.Add(legend2);
             this.cha_line_ga.Location = new System.Drawing.Point(36, 25);
             this.cha_line_ga.Name = "cha_line_ga";
             this.cha_line_ga.Size = new System.Drawing.Size(868, 493);
@@ -122,7 +122,7 @@
             this.tb_path.Name = "tb_path";
             this.tb_path.Size = new System.Drawing.Size(374, 22);
             this.tb_path.TabIndex = 3;
-            this.tb_path.Text = "C:\\Users\\Dan\\AI\\test20.json";
+            this.tb_path.Text = "C:\\Users\\Dan\\Git\\AI_SEM6120_A2\\src\\Test\\test30.json";
             // 
             // cbl_data
             // 
@@ -198,7 +198,7 @@
             this.nud_gen.Size = new System.Drawing.Size(91, 22);
             this.nud_gen.TabIndex = 9;
             this.nud_gen.Value = new decimal(new int[] {
-            4000,
+            1000,
             0,
             0,
             0});
@@ -245,7 +245,7 @@
             this.nud_conts.Size = new System.Drawing.Size(91, 22);
             this.nud_conts.TabIndex = 13;
             this.nud_conts.Value = new decimal(new int[] {
-            4,
+            5,
             0,
             0,
             0});
@@ -459,8 +459,6 @@
             // cb_adapmut
             // 
             this.cb_adapmut.AutoSize = true;
-            this.cb_adapmut.Checked = true;
-            this.cb_adapmut.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_adapmut.Cursor = System.Windows.Forms.Cursors.Default;
             this.cb_adapmut.Location = new System.Drawing.Point(1443, 212);
             this.cb_adapmut.Name = "cb_adapmut";
@@ -518,8 +516,6 @@
             // cb_srog
             // 
             this.cb_srog.AutoSize = true;
-            this.cb_srog.Checked = true;
-            this.cb_srog.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_srog.Location = new System.Drawing.Point(1443, 264);
             this.cb_srog.Name = "cb_srog";
             this.cb_srog.Size = new System.Drawing.Size(15, 14);
