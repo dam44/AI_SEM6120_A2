@@ -6,20 +6,32 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI.Recombination
 {
+    /// <summary>
+    /// Two Point PMX Crossover Operator
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class TwoPointCrossoverPMX<T> : Crossover<T> where T : IData
     {
+        /// <summary>
+        /// Takes 2 parents, Creates two children from them.
+        /// </summary>
+        /// <param name="ao_parents"></param>
+        /// <returns></returns>
         public override Chromosome<T>[] GenerateChildPair(Chromosome<T>[] ao_parents)
         {
+            //Check whether to crossover. (Crossover Probability)
             if (!isCrossover()) return ao_parents;
 
             int li_crosspoint_one = Globals<T>.RAND.Next(ao_parents[0].GetOrder().Count / 2);
             int li_crosspoint_two;
 
+            //Create second crosspoint. Make sure it's not the same crosspoint as the first one.
             do
             {
                 li_crosspoint_two = Globals<T>.RAND.Next(ao_parents[0].GetOrder().Count / 2);
             } while (li_crosspoint_two == li_crosspoint_one);
 
+            //Crosspoint one is always the higher number.
             if (li_crosspoint_two > li_crosspoint_one)
             {
                 int temp = li_crosspoint_one;
@@ -28,7 +40,7 @@ namespace GeneticAPI.Recombination
             }
 
             Chromosome < T >[] lo_children = new Chromosome<T>[2];
-
+            //Call create child twice, swapping position of parents to generate two different children from them.
             lo_children[0] = CreateChild(li_crosspoint_one, li_crosspoint_two, ao_parents[0], ao_parents[1]);
             lo_children[1] = CreateChild(li_crosspoint_one, li_crosspoint_two, ao_parents[1], ao_parents[0]);
 
@@ -36,6 +48,24 @@ namespace GeneticAPI.Recombination
 
         }
 
+        /// <summary>
+        /// Creates child using One Point PMX Crossover method.
+        /// Select a random positions n1 and n2 in Chromosome gene list.
+        /// Ensure: n1 > n2
+        /// 
+        /// 
+        /// Find Gene g1 at n1 Parent 1 p1.
+        /// Find Gene g2 at n1 Parent 2 p2.
+        /// Find g2 in p1, swap g1 with g2.
+        ///  n1 = n1 - 1
+        /// Repeat, while (n1 gt n2)
+        /// 
+        /// Return p1 as Child c1
+        /// </summary>
+        /// <param name="ai_crosspoint"></param>
+        /// <param name="ao_parent1"></param>
+        /// <param name="ao_parent2"></param>
+        /// <returns></returns>
         public Chromosome<T> CreateChild(int ai_crosspoint_one, int ai_crosspoint_two, Chromosome<T> ao_parent1, Chromosome<T> ao_parent2)
         {
 

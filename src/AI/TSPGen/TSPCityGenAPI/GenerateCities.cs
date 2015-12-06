@@ -7,6 +7,9 @@ using TSPModel;
 
 namespace TSPCityGenAPI
 {
+    /// <summary>
+    /// Generates a list of cities.
+    /// </summary>
     public class GenerateCities
     {
         private Random io_rand;
@@ -16,6 +19,15 @@ namespace TSPCityGenAPI
         {
             io_rand = new Random();
         }
+        /// <summary>
+        /// Generates a list of cities.
+        /// </summary>
+        /// <param name="num">Number of cities to generate.</param>
+        /// <param name="minX"></param>
+        /// <param name="maxX"></param>
+        /// <param name="minY"></param>
+        /// <param name="maxY"></param>
+        /// <returns></returns>
         public List<City> Generate(int num, int minX = 0, int maxX = 100, int minY = 0, int maxY = 100)
         {
             List<City> lo_cities = new List<City>();

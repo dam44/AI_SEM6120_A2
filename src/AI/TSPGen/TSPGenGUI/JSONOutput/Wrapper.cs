@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TSPGenGUI.JSONOutput
 {
+    /// <summary>
+    /// JSON Wrapper class.
+    /// </summary>
     public class Wrapper
     {
         public List<Run> runs;

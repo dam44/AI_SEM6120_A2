@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI.SuperROG
 {
+    /// <summary>
+    /// Continually add new Chromosomes to the Concurrent Priority Queue.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class SuperROG<T> where T : IData
     {
         private ConcurrentPriorityQueue<Chromosome<T>> io_cpq;

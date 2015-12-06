@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace TSPGenGUI.JSONOutput
 {
+    /// <summary>
+    /// JSON Run class. Stores information about a GA run.
+    /// </summary>
     public class Run
     {
         public string route { get; }

@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI._5_Modification
 {
+    /// <summary>
+    /// Mutation Abstract Super Class.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class Mutation<T> : Modification<T> where T : IData
     {
         private Chromosome<T>[] io_population;
@@ -17,6 +21,12 @@ namespace GeneticAPI._5_Modification
         public Mutation() {
             ii_iterationsreq = 50;
         }
+
+        /// <summary>
+        /// Mutates the population.
+        /// </summary>
+        /// <param name="population"></param>
+        /// <returns></returns>
         public override Chromosome<T>[] MutatePopulation(Chromosome<T>[] population)
         {
             io_population = population;
@@ -29,6 +39,10 @@ namespace GeneticAPI._5_Modification
             return population;
         }
 
+        /// <summary>
+        /// Adaptive Mutation, calculate the bonus added to Mutation probability.
+        /// Based on how much variance is in the population, calculted using the standard deviation.
+        /// </summary>
         private void CalcMutationBonus()
         {
             Globals<T>.MODIFYBONUS = 0;
@@ -47,6 +61,7 @@ namespace GeneticAPI._5_Modification
                 }
             }
         }
+        //Check for a Chromosome whether it should be Muatated.
         public bool isMutation()
         {
             ii_iterationcount++;

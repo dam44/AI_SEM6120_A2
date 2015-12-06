@@ -14,6 +14,10 @@ using TSPModel;
 namespace TSPGenGUI
 {
     public delegate void ChartEventHandler(object sender, GUIGAEvent e);
+
+    /// <summary>
+    /// Initiates the GA by calling the Processor class. Subscriber to GA, handles events.
+    /// </summary>
     public class GA
     {
         public event ChartEventHandler ChartUpdate;
@@ -48,6 +52,7 @@ namespace TSPGenGUI
 
             string[] args = new string[1];
             args[0] = ii_path;
+            //Imports data from JSON file and adds it to list.
             GeneticAPI.JsonFileReader<City> importer = new GeneticAPI.JsonFileReader<City>();
             List<City> lo_data = importer.Import(args[0]);
 
@@ -57,7 +62,9 @@ namespace TSPGenGUI
             }
 
             Processor<City> lo_processor = new Processor<City>();
+            //Subscribe to GA.
             lo_processor.Changed += new ChangedEventHandler(Changed);
+            //Start GA.
             lo_processor.Execute(lo_data, ii_poolsize, ii_generations, id_modifyprob, id_recomprob, ien_selector, ien_recomb, ien_random, ii_elites, ii_ts_contestants, ib_adaptivemut, ib_rog, ib_srog);
         }
 
@@ -126,17 +133,18 @@ namespace TSPGenGUI
             ida_starttime = new DateTime();
         }
 
+        //Handles event from GA.
         private void Changed(object sender, GeneticAPI.Events.APIEventArgs e)
         {
             if (ida_starttime == DateTime.MinValue)
             {
                 ida_starttime = DateTime.Now;
             }
+            //Record statistics.
             ii_reccount++;
             id_avgavg += e.avgfitness;
             id_avgavgavg += e.avgfitness;
             il_msgcount++;
-            //id_avgbest += e.bestfitness;
             ii_gencount++;
             if (e.finished)
             {
@@ -146,22 +154,24 @@ namespace TSPGenGUI
             {
                 e.avgfitness = (id_avgavg / ii_reccount);
                 
-                //e.bestfitness = (id_best / ii_reccount);
                 id_best = e.bestfitness;
                 is_bestchrom = e.bestchrom;
                 ii_reccount = 0;
                 id_avgavg = 0;
+                //Send event to GUI.
                 GUIGAEvent gui_e = new GUIGAEvent(e, ii_gencount);
                 OnChartUpdate(gui_e);
             }
         }
 
+        //Add run to wrapper class on run completion.
         public void Complete()
         {
             if (io_run == null) return;
             its_runtime = DateTime.Now - ida_starttime;
             io_wrapper.runs.Add(new Run(io_run, id_avgavgavg/il_msgcount, id_best, is_bestchrom, its_runtime));
         }
+
 
         protected virtual void OnChartUpdate(GUIGAEvent e)
         {

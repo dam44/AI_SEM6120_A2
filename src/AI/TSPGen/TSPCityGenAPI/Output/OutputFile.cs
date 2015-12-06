@@ -15,6 +15,9 @@ namespace TSPCityGenAPI
         {
             this.filename = filename;
         }
+        /// <summary>
+        /// Outputs list of cities to JSON file.
+        /// </summary>
         public override void Output()
         {
            String ls_output = JsonConvert.SerializeObject(this.io_cities);

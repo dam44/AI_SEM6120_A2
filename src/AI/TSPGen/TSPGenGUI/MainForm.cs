@@ -22,6 +22,9 @@ using TSPModel;
 
 namespace TSPGenGUI
 {
+    /// <summary>
+    /// GUI class for GA.
+    /// </summary>
     public partial class MainForm : Form
     {
         private BindingList<GARun> io_runs;
@@ -29,7 +32,9 @@ namespace TSPGenGUI
         private List<string> SERIES;
         private Wrapper io_wrapper;
 
-      
+      /// <summary>
+      /// Creates form GUI.
+      /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -37,6 +42,7 @@ namespace TSPGenGUI
             io_wrapper.overall = new Overall();
             io_wrapper.runs = new List<Run>();
 
+            //Bind run list to list box.
             io_runs = new BindingList<GARun>();
             lbox_runs.DataSource = io_runs;
 
@@ -45,15 +51,20 @@ namespace TSPGenGUI
             string[] lo_series = { "Average Fitness", "Best Fitness" };
             cbl_data.Items.AddRange(lo_series);
 
+            //Bind enums.
             comb_rand.DataSource = Enum.GetValues(typeof(Randoms));
             comb_recom.DataSource = Enum.GetValues(typeof(Recombinators));
             comb_selector.DataSource = Enum.GetValues(typeof(Selectors));
+
+            //Set data list items to checked by default.
             for (int i = 0; i < cbl_data.Items.Count; i++) {
                 cbl_data.SetItemChecked(i, true);
             }
         }
 
         delegate void UpdateGraphCallback(string as_series, double ad_fitness);
+
+        //Updates the graph.
         private void UpdateGraph(string as_series, double ad_fitness)
         {
             try {
@@ -75,6 +86,7 @@ namespace TSPGenGUI
 
         delegate void UpdateLabelsCallback(GUIGAEvent e);
 
+        //Updates the labels.
         private void UpdateLabels(GUIGAEvent e)
         {
             try
@@ -101,7 +113,7 @@ namespace TSPGenGUI
 
 
 
-
+        //Recieve changed event from GA class.
         private void Changed(object sender, GUIGAEvent e)
         {
             UpdateLabels(e);
@@ -172,6 +184,10 @@ namespace TSPGenGUI
         }
 
         delegate void UpdateStartCallback();
+
+        /// <summary>
+        /// Start the GA.
+        /// </summary>
         private void Start()
         {
             if (this.cha_line_ga.InvokeRequired)
@@ -183,6 +199,7 @@ namespace TSPGenGUI
             {
                 try
                 {
+                    //Start GA as new thread.
                     GA lo_ga = new GA();
                     lo_ga.init(io_runs[0], ref io_wrapper);
                     io_gathread = new Thread(lo_ga.StartGA);
@@ -230,6 +247,11 @@ namespace TSPGenGUI
             }
         }
 
+        /// <summary>
+        /// Add JSON city data file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_data_path_Click(object sender, EventArgs e)
         {
             SaveFileDialog lo_save = new SaveFileDialog();
@@ -239,7 +261,11 @@ namespace TSPGenGUI
             tb_path.Text = lo_save.FileName;
         }
 
-
+        /// <summary>
+        /// Add GA run.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_add_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrWhiteSpace(tb_path.Text)) return;
@@ -272,7 +298,11 @@ namespace TSPGenGUI
             //lbox_runs.Update();
         }
 
-
+        /// <summary>
+        /// Output logfile.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_log_Click(object sender, EventArgs e)
         {
             io_wrapper.overall.init(io_wrapper.runs);

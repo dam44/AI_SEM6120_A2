@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TSPGenGUI.JSONOutput
 {
+    /// <summary>
+    /// JSON overall results class.
+    /// </summary>
     public class Overall
     {
 
@@ -19,7 +22,10 @@ namespace TSPGenGUI.JSONOutput
 
         }
 
-
+        /// <summary>
+        /// Calculates statistics based on runs.
+        /// </summary>
+        /// <param name="ao_runs"></param>
         public void init(List<Run> ao_runs)
         {
             List<TimeSpan> lts_timespans = new List<TimeSpan>();

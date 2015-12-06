@@ -7,9 +7,17 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI.Recombination
 {
+    /// <summary>
+    /// Crossover Operator Abstract Superclass.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class Crossover<T> : Recombination<T> where T : IData
     {
-
+        /// <summary>
+        /// Call ROG/SROG to get a Chromosome to use as one of the parents.
+        /// </summary>
+        /// <param name="ao_disappointingchild"></param>
+        /// <returns></returns>
         private Chromosome<T> GetOrphanChild(Chromosome<T> ao_disappointingchild)
         {
             //Filing paper work...
@@ -29,6 +37,11 @@ namespace GeneticAPI.Recombination
             return lo_orphanchild;
 
         }
+        /// <summary>
+        /// Generates new generation of children.
+        /// </summary>
+        /// <param name="ao_parents"></param>
+        /// <returns></returns>
         public override Chromosome<T>[] GenerateChildren(Chromosome<T>[] ao_parents)
         {
             Array.Sort(ao_parents);
@@ -36,18 +49,18 @@ namespace GeneticAPI.Recombination
             li_inc = 2;
             for (int i = 0; i < Globals<T>.POOLSIZE; i += li_inc)
             {
+                //Compare parents, if they are the same then call ROG.
                 if ((ao_parents[i].CompareTo(ao_parents[i + 1])) == 0)
                 {
                     ao_parents[i + 1] = GetOrphanChild(ao_parents[i + 1]);
                 }
                 Copulate(ref ao_parents, i);
             }
-
+            //If the poolsize is uneven then use ROG on the final parent who didn't get to have children.
             if ((Globals<T>.POOLSIZE % 2) != 0)
             {
                 Chromosome<T>[] lo_parents = new Chromosome<T>[2];
                 lo_parents[0] = ao_parents[ao_parents.Length - 1];
-                //lo_parents[1] = InitialChromosomeFactory<T>.GenerateChromosome();
                 lo_parents[1] = GetOrphanChild(ao_parents[1]);
                 Copulate(ref lo_parents, 0);
                 ao_parents[ao_parents.Length - 1] = lo_parents[0];
@@ -55,6 +68,11 @@ namespace GeneticAPI.Recombination
             return ao_parents;
         }
 
+        /// <summary>
+        /// Generate two children from parents.
+        /// </summary>
+        /// <param name="ao_parents"></param>
+        /// <param name="i"></param>
         private void Copulate(ref Chromosome<T>[] ao_parents, int i)
         {
             Chromosome<T>[] parents = { ao_parents[i], ao_parents[i + 1] };
@@ -62,6 +80,11 @@ namespace GeneticAPI.Recombination
             ao_parents[i] = children[0];
             ao_parents[i + 1] = children[1];
         }
+
+        /// <summary>
+        /// Check whether to use Crossover for two parents.
+        /// </summary>
+        /// <returns></returns>
         public bool isCrossover()
         {
 
@@ -82,34 +105,3 @@ namespace GeneticAPI.Recombination
     }
 
 }
-
-
-//if (i >= Globals<T>.POOLSIZE)
-//{
-//    break;
-//}
-//else if (i + 1 >= Globals<T>.POOLSIZE)
-//{
-//    break;
-//}
-
-//li_child1 = i;
-//int j = li_child1;
-//do
-//{
-//    if (j < Globals<T>.POOLSIZE - 1)
-//    {
-//        j++;
-//        li_child2 = j;
-//    } else
-//    {
-//        break;
-//    }
-//} while
-//(
-//li_child1 < ao_parents.Length &&
-//li_child2 < ao_parents.Length &&
-//(ao_parents[li_child2].fitness == ao_parents[li_child1].fitness)
-//);
-
-//li_child2 = i + 1;

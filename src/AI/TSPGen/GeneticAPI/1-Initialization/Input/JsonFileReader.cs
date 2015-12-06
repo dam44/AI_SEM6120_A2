@@ -7,8 +7,17 @@ using Newtonsoft.Json;
 
 namespace GeneticAPI
 {
+    /// <summary>
+    /// Reads a JSON file into a list of T.
+    /// </summary>
+    /// <typeparam name="T">A Gene</typeparam>
     public class JsonFileReader<T>
     {
+        /// <summary>
+        /// Imports the JSON file.
+        /// </summary>
+        /// <param name="ao_filename">Full path of file.</param>
+        /// <returns></returns>
         public List<T> Import(string ao_filename)
         {
             try {

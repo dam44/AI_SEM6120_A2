@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI
 {
+    /// <summary>
+    /// Converts a list of data to a list of genes.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class DataEncoder<T> where T : IData
     {
         public static List<Gene<T>> EncodeListFromData(List<T> ao_data)

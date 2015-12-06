@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI.Selection
 {
+    /// <summary>
+    /// Selector Abstract Super Class.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class Selector<T> where T : IData
     {
         protected Chromosome<T>[] io_pop;
@@ -18,6 +22,7 @@ namespace GeneticAPI.Selection
             this.id_totalinversefitness = FindTotalInverseFitness();
         }
 
+        //Findsw total fitness of population.
         protected double FindTotalFitness()
         {
             double ld_totalfitness = 0;
@@ -29,6 +34,7 @@ namespace GeneticAPI.Selection
             return ld_totalfitness;
         }
 
+        //Finds total inverse fitness of population.
         protected double FindTotalInverseFitness()
         {
             double ld_totalinversefitness = 0;
@@ -40,6 +46,10 @@ namespace GeneticAPI.Selection
             return ld_totalinversefitness;
         }
 
+        /// <summary>
+        /// Select candidate from population.
+        /// </summary>
+        /// <returns></returns>
         public abstract Chromosome<T> MakeSelection();
     }
 }

@@ -9,8 +9,17 @@ using GeneticAPI.Shared.Util;
 
 namespace GeneticAPI._5_Modification.Mutation.PMX
 {
+    /// <summary>
+    /// Mutation Operator.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class MutationImpl<T> : Mutation<T> where T : IData
     {
+        /// <summary>
+        /// Modifies a candidate by swapping two of its Genes.
+        /// </summary>
+        /// <param name="ao_parent"></param>
+        /// <returns></returns>
         public override Chromosome<T>[] ModifyChildren(Chromosome<T>[] ao_parent)
         {
             //Don't change anything if not mutating.

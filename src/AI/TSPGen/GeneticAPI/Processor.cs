@@ -19,11 +19,16 @@ using System.Threading;
 namespace GeneticAPI
 {
     public delegate void ChangedEventHandler(object sender, APIEventArgs e);
+    /// <summary>
+    /// Initiates GA and iterates through population generations.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Processor<T> where T : IData
     {
         public event ChangedEventHandler Changed;
         public static Thread io_thread = null;
 
+        //Sends event to those subscribed.
         protected virtual void OnChanged(APIEventArgs e)
         {
             if (Changed != null)
@@ -31,6 +36,23 @@ namespace GeneticAPI
                 Changed(this, e); 
             }
         }
+
+        /// <summary>
+        /// Starts the Genetic Algorithm.
+        /// </summary>
+        /// <param name="ao_data">List of IData to be converted into Genes and stored in Chromosome.</param>
+        /// <param name="ai_poolsize">Size of population.</param>
+        /// <param name="ai_generations">Number of generations to iterate algorithm.</param>
+        /// <param name="ad_modifyprob">Probability of modification/mutation.</param>
+        /// <param name="ad_recomprob">Probability of recombination/crossover.</param>
+        /// <param name="aen_selector">Selector Operator.</param>
+        /// <param name="aen_recomb">Recombination Operator.</param>
+        /// <param name="aen_random">Random basic vs adv</param>
+        /// <param name="ai_elites">Number of Elites.</param>
+        /// <param name="ai_ts_contestants">Number of Contestants for Tournament Selector.</param>
+        /// <param name="ab_adaptivemut">Adaptive Mutation Enabler.</param>
+        /// <param name="ab_rog">ROG Enabler.</param>
+        /// <param name="ab_srog">SROG Enabler.</param>
         public void Execute
             (
                 List<T> ao_data, 
@@ -78,6 +100,7 @@ namespace GeneticAPI
             double ld_inifitness = 0;
             int li_generation = 0;
 
+            //Start SROG thread if it's active.
             if (Globals<T>.SROG && io_thread == null)
             {
                 Globals<T>.CPQ = new ConcurrentPriorityQueue<Chromosome<T>>(100);
@@ -91,7 +114,7 @@ namespace GeneticAPI
             ExecutionFunctions<T>.Initialize(ref ld_inifitness, ref ld_popbestfitness, lo_pop, lo_noteablechroms);
 
             Chromosome<T>[] lo_newpop = new Chromosome<T>[Globals<T>.POOLSIZE];
-            //Start Genetic Algorithm.
+            //Iterate Genetic Algorithm.
             while (ContinueGA(ref li_generation)) {
                 ExecutionFunctions<T>.EvaluateElite(lo_pop);
                 ExecutionFunctions<T>.Select(lo_pop, lo_newpop, aen_selector, ai_ts_contestants);
@@ -109,13 +132,9 @@ namespace GeneticAPI
             OnChanged(new APIEventArgs("Final avg fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
             OnChanged(new APIEventArgs("Initial best fitness: ", false,ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString()));
             OnChanged(new APIEventArgs("Overall best fitness: ", false, ld_fitness, ld_popbestfitness, lo_noteablechroms.GetFinalBest().fitness, lo_noteablechroms.GetFinalBest().ToString(), true));
-
-            //if (lo_thread != null)
-            //{
-            //    lo_thread.Abort();
-            //}
         }
 
+        //Check whether to stop GA.
         private bool ContinueGA(ref int ai_generation)
         {
             bool lb_ret = true;

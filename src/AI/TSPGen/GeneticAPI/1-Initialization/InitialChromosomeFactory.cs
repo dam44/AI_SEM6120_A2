@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI
 {
+    /// <summary>
+    /// Generates new Chromosomes.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class InitialChromosomeFactory<T> where T : IData
     {
         private static Random RAND = new Random();
@@ -17,6 +21,11 @@ namespace GeneticAPI
 
         }
 
+        /// <summary>
+        /// Creates a new list of genes..
+        /// Adds all genes to a stack, shuffles stack and adds stack to list.
+        /// </summary>
+        /// <returns></returns>
         private static List<Gene<T>> CreateOrder()
         {
             List<Gene<T>> lo_order = new List<Gene<T>>();
@@ -36,7 +45,11 @@ namespace GeneticAPI
 
             return lo_order;
         }
-
+        /// <summary>
+        /// Shuffles stack of genes.
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
         private static IList<int> Shuffle(IList<int> list)
         {
             int n = list.Count;

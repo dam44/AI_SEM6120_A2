@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI.Fitness
 {
+    /// <summary>
+    /// Determines which Chromosomes are Elite.
+    /// These Chromosomes are added to a seperate list so that they can still participate in Crossover and Mutation
+    /// and then be added back in afterwards.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Elitism<T> where T : IData
     {
+        /// <summary>
+        /// Marks best Chromosomes as Elite.
+        /// </summary>
+        /// <param name="ao_pop"></param>
         public static void MarkElite(Chromosome<T>[] ao_pop)
         {
             Chromosome<T>[] lo_elites = new Chromosome<T>[Globals<T>.ELITENUM];
@@ -18,10 +28,12 @@ namespace GeneticAPI.Fitness
             {
                 int li_worstpos = -1;
                 double ld_worstfitness = ao_pop[i].fitness;
+                //Loop through the number of Elites required..
                 for (int j = 0; j < Globals<T>.ELITENUM; j++)
                 {
                     if (!lb_full)
                     {
+                        //If Elite list is not full then we add the candidate to it.
                         if ((lo_elites[j] == null))
                         {
                             li_count++;
@@ -35,6 +47,7 @@ namespace GeneticAPI.Fitness
                     }
                     else
                     {
+                        //If the Elite list is full then we compare the candidate against the elites and find the worst Elite that it is better than.
                         if ((ld_worstfitness < lo_elites[j].fitness))
                         {
                             ld_worstfitness = lo_elites[j].fitness;
@@ -42,6 +55,7 @@ namespace GeneticAPI.Fitness
                         }
                     }
                 }
+                //Switch it with the worst Elite it is better than. If it's worse than all then discard.
                 if (li_worstpos != -1)
                 {
                     lo_elites[li_worstpos] = ao_pop[i];

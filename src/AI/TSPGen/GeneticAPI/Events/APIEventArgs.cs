@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GeneticAPI.Events
 {
+    /// <summary>
+    /// Sends an event to a subscribed client with information about the algorithm run.
+    /// </summary>
     public class APIEventArgs : EventArgs
     {
         public string message { get; set; }
