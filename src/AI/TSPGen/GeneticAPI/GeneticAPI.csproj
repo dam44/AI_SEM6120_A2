@@ -22,8 +22,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -77,8 +77,8 @@
     <Compile Include="Shared\NotableChromosomes.cs" />
     <Compile Include="Shared\Util\Randoms.cs" />
     <Compile Include="Shared\Util\Util.cs" />
-    <Compile Include="SuperROG\ConcurrentPriorityQueue.cs" />
-    <Compile Include="SuperROG\SuperROG.cs" />
+    <Compile Include="LessROG\ConcurrentPriorityQueue.cs" />
+    <Compile Include="LessROG\LessROG.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

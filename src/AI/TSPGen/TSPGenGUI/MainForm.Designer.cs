@@ -69,7 +69,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.cb_srog = new System.Windows.Forms.CheckBox();
+            this.cb_lrog = new System.Windows.Forms.CheckBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.comb_rand = new System.Windows.Forms.ComboBox();
@@ -83,6 +83,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_mutp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_crossp)).BeginInit();
             this.SuspendLayout();
+
+            this.FormClosing += this.FormMain_FormClosing;
             // 
             // cha_line_ga
             // 
@@ -507,29 +509,30 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(1239, 237);
+            this.label16.Location = new System.Drawing.Point(1246, 238);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(185, 16);
             this.label16.TabIndex = 38;
             this.label16.Text = "Random Offspring Generation";
             // 
-            // cb_srog
+            // cb_lrog
             // 
-            this.cb_srog.AutoSize = true;
-            this.cb_srog.Location = new System.Drawing.Point(1443, 264);
-            this.cb_srog.Name = "cb_srog";
-            this.cb_srog.Size = new System.Drawing.Size(15, 14);
-            this.cb_srog.TabIndex = 39;
-            this.cb_srog.UseVisualStyleBackColor = true;
+            this.cb_lrog.AutoSize = true;
+            this.cb_lrog.Location = new System.Drawing.Point(1443, 264);
+            this.cb_lrog.Name = "cb_lrog";
+            this.cb_lrog.Size = new System.Drawing.Size(15, 14);
+            this.cb_lrog.TabIndex = 39;
+            this.cb_lrog.UseVisualStyleBackColor = true;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(1265, 263);
+            this.label17.Location = new System.Drawing.Point(1361, 262);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(158, 16);
+            this.label17.Size = new System.Drawing.Size(70, 16);
             this.label17.TabIndex = 40;
-            this.label17.Text = "Super Turbo Sports ROG";
+            this.label17.Text = "Less ROG";
+            this.label17.Click += new System.EventHandler(this.label17_Click);
             // 
             // label18
             // 
@@ -567,7 +570,7 @@
             this.Controls.Add(this.label18);
             this.Controls.Add(this.comb_rand);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.cb_srog);
+            this.Controls.Add(this.cb_lrog);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
@@ -665,7 +668,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.CheckBox cb_srog;
+        private System.Windows.Forms.CheckBox cb_lrog;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox comb_rand;

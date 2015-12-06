@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -31,10 +32,12 @@ namespace TSPGenGUI
         private Thread io_gathread;
         private List<string> SERIES;
         private Wrapper io_wrapper;
+        private static List<Thread> SROGThreads = new List<Thread>();
+        private GA io_ga;
 
-      /// <summary>
-      /// Creates form GUI.
-      /// </summary>
+        /// <summary>
+        /// Creates form GUI.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -57,7 +60,8 @@ namespace TSPGenGUI
             comb_selector.DataSource = Enum.GetValues(typeof(Selectors));
 
             //Set data list items to checked by default.
-            for (int i = 0; i < cbl_data.Items.Count; i++) {
+            for (int i = 0; i < cbl_data.Items.Count; i++)
+            {
                 cbl_data.SetItemChecked(i, true);
             }
         }
@@ -67,16 +71,19 @@ namespace TSPGenGUI
         //Updates the graph.
         private void UpdateGraph(string as_series, double ad_fitness)
         {
-            try {
+            try
+            {
                 if (this.cha_line_ga.InvokeRequired)
                 {
                     UpdateGraphCallback lo_cb = new UpdateGraphCallback(UpdateGraph);
                     this.Invoke(lo_cb, new Object[] { as_series, ad_fitness });
-                } else
+                }
+                else
                 {
                     cha_line_ga.Series[as_series].Points.AddY(ad_fitness);
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
 
             }
@@ -116,22 +123,33 @@ namespace TSPGenGUI
         //Recieve changed event from GA class.
         private void Changed(object sender, GUIGAEvent e)
         {
-            UpdateLabels(e);
-            for (int i = 0; i < SERIES.Count; i++)
+            if (!e.ib_pastgens)
             {
-                if (SERIES[i] == "Average Fitness")
+                UpdateLabels(e);
+                for (int i = 0; i < SERIES.Count; i++)
                 {
-                    UpdateGraph(SERIES[i], e.avgfitness);
-                } else
-                {
-                    UpdateGraph(SERIES[i], e.bestfitness);
+                    if (SERIES[i] == "Average Fitness")
+                    {
+                        UpdateGraph(SERIES[i], e.avgfitness);
+                    }
+                    else
+                    {
+                        UpdateGraph(SERIES[i], e.bestfitness);
+                    }
                 }
             }
-
             if (e.finished)
             {
                 try
                 {
+                    //try
+                    //{
+                    //    io_ga.SROGThread.Abort();
+                    //} catch (Exception ex)
+                    //{
+                    //    Debug.WriteLine("Couldn't abort SROG thread");
+                    //}
+                    SROGThreads.Add(io_ga.SROGThread);
                     io_gathread.Abort();
                 }
                 catch (Exception ex)
@@ -200,10 +218,10 @@ namespace TSPGenGUI
                 try
                 {
                     //Start GA as new thread.
-                    GA lo_ga = new GA();
-                    lo_ga.init(io_runs[0], ref io_wrapper);
-                    io_gathread = new Thread(lo_ga.StartGA);
-                    lo_ga.ChartUpdate += new ChartEventHandler(Changed);
+                    io_ga = new GA();
+                    io_ga.init(io_runs[0], ref io_wrapper);
+                    io_gathread = new Thread(io_ga.StartGA);
+                    io_ga.ChartUpdate += new ChartEventHandler(Changed);
 
                     cha_line_ga.Series.Clear();
                     SERIES.Clear();
@@ -274,7 +292,7 @@ namespace TSPGenGUI
             Enum.TryParse<Selectors>(comb_selector.SelectedValue.ToString(), out len_selector);
 
             Recombinators len_recomb;
-            Enum.TryParse <Recombinators>(comb_recom.SelectedValue.ToString(), out len_recomb);
+            Enum.TryParse<Recombinators>(comb_recom.SelectedValue.ToString(), out len_recomb);
 
             Randoms len_rands;
             Enum.TryParse<Randoms>(comb_rand.SelectedValue.ToString(), out len_rands);
@@ -292,7 +310,7 @@ namespace TSPGenGUI
                         (int)nud_conts.Value,
                         cb_adapmut.Checked,
                         cb_rog.Checked,
-                        cb_srog.Checked
+                        cb_lrog.Checked
                 ));
             //lbox_runs.Data
             //lbox_runs.Update();
@@ -305,13 +323,20 @@ namespace TSPGenGUI
         /// <param name="e"></param>
         private void btn_log_Click(object sender, EventArgs e)
         {
-            io_wrapper.overall.init(io_wrapper.runs);
-
-            string ls_json = JsonConvert.SerializeObject(io_wrapper);
-
-            using (StreamWriter lo_outstream = new StreamWriter(@"Results/RunDetails.json"))
+            try
             {
-                lo_outstream.Write(ls_json);
+                io_wrapper.overall.init(io_wrapper.runs);
+
+                string ls_json = JsonConvert.SerializeObject(io_wrapper);
+
+                using (StreamWriter lo_outstream = new StreamWriter(@"Results/RunDetails.json"))
+                {
+                    lo_outstream.Write(ls_json);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception thrown logging runs.");
             }
         }
 
@@ -381,5 +406,29 @@ namespace TSPGenGUI
 
         }
 
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            for (int i = 0; i < SROGThreads.Count; i++)
+            {
+                try
+                {
+                    if (SROGThreads[i] != null)
+                    {
+                        SROGThreads[i].Abort();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Failed aborting SROG threads.");
+                }
+            }
+
+        }
     }
 }

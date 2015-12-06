@@ -14,7 +14,7 @@ namespace GeneticAPI.Recombination
     public abstract class Crossover<T> : Recombination<T> where T : IData
     {
         /// <summary>
-        /// Call ROG/SROG to get a Chromosome to use as one of the parents.
+        /// Call ROG/LROG to get a Chromosome to use as one of the parents.
         /// </summary>
         /// <param name="ao_disappointingchild"></param>
         /// <returns></returns>
@@ -22,7 +22,7 @@ namespace GeneticAPI.Recombination
         {
             //Filing paper work...
             Chromosome<T> lo_orphanchild = null;
-            if (Globals<T>.SROG)
+            if (Globals<T>.LROG)
             {
                 lo_orphanchild = Globals<T>.CPQ.Dequeue();
             } else if (Globals<T>.ROG)

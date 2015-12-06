@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TSPGenGUI.JSONOutput;
 using TSPModel;
@@ -20,6 +21,7 @@ namespace TSPGenGUI
     /// </summary>
     public class GA
     {
+        public Thread SROGThread { get; set; }
         public event ChartEventHandler ChartUpdate;
         private int ii_recpergen;
         private string ii_path;
@@ -34,7 +36,7 @@ namespace TSPGenGUI
         private int ii_ts_contestants = 2;
         private bool ib_adaptivemut = true;
         private bool ib_rog = false;
-        private bool ib_srog = true;
+        private bool ib_lrog = true;
         private GARun io_run = null;
 
         private double id_avgavg;
@@ -47,6 +49,7 @@ namespace TSPGenGUI
         private string is_bestchrom;
         private DateTime ida_starttime;
         private TimeSpan its_runtime;
+
         public void StartGA()
         {
 
@@ -65,7 +68,7 @@ namespace TSPGenGUI
             //Subscribe to GA.
             lo_processor.Changed += new ChangedEventHandler(Changed);
             //Start GA.
-            lo_processor.Execute(lo_data, ii_poolsize, ii_generations, id_modifyprob, id_recomprob, ien_selector, ien_recomb, ien_random, ii_elites, ii_ts_contestants, ib_adaptivemut, ib_rog, ib_srog);
+            lo_processor.Execute(lo_data, ii_poolsize, ii_generations, id_modifyprob, id_recomprob, ien_selector, ien_recomb, ien_random, ii_elites, ii_ts_contestants, ib_adaptivemut, ib_rog, ib_lrog);
         }
 
         public void SetJSONWrapper(ref Wrapper ao_wrapper)
@@ -88,7 +91,7 @@ namespace TSPGenGUI
                 int ai_ts_contestants = 2,
                 bool ab_adaptivemut = true,
                 bool ab_rog = false,
-                bool ab_srog = true
+                bool ab_lrog = true
             )
         {
             ii_recpergen = ai_recpergen;
@@ -104,7 +107,7 @@ namespace TSPGenGUI
             ii_ts_contestants = ai_ts_contestants;
             ib_adaptivemut = ab_adaptivemut;
             ib_rog = ab_rog;
-            ib_srog = ab_srog;
+            ib_lrog = ab_lrog;
             ida_starttime = new DateTime();
         }
 
@@ -129,7 +132,7 @@ namespace TSPGenGUI
             ii_ts_contestants = ao_run.ii_ts_contestants;
             ib_adaptivemut = ao_run.ib_adaptivemut;
             ib_rog = ao_run.ib_rog;
-            ib_srog = ao_run.ib_srog;
+            ib_lrog = ao_run.ib_lrog;
             ida_starttime = new DateTime();
         }
 
@@ -160,7 +163,8 @@ namespace TSPGenGUI
                 id_avgavg = 0;
                 //Send event to GUI.
                 GUIGAEvent gui_e = new GUIGAEvent(e, ii_gencount);
-                OnChartUpdate(gui_e);
+                if (ii_gencount > ii_generations) gui_e.ib_pastgens = true;
+                 OnChartUpdate(gui_e);
             }
         }
 
@@ -170,6 +174,7 @@ namespace TSPGenGUI
             if (io_run == null) return;
             its_runtime = DateTime.Now - ida_starttime;
             io_wrapper.runs.Add(new Run(io_run, id_avgavgavg/il_msgcount, id_best, is_bestchrom, its_runtime));
+            SROGThread = Globals<City>.SROGTHREAD;
         }
 
 

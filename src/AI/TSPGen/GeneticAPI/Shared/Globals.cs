@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GeneticAPI
@@ -48,10 +49,15 @@ namespace GeneticAPI
         //Random Offspring enabler.
         public static bool ROG { get; set; }
 
-        //SROG enabler.
-        public static bool SROG { get; set; }
+        //LROG enabler.
+        public static bool LROG { get; set; }
 
         //Concurrent Priority Queue instance used for SROG.
         public static ConcurrentPriorityQueue<Chromosome<T>> CPQ;
+
+        public static Thread SROGTHREAD
+        {
+            get; set;
+        }
     }
 }

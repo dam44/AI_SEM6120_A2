@@ -26,7 +26,7 @@ namespace GeneticAPI
     public class Processor<T> where T : IData
     {
         public event ChangedEventHandler Changed;
-        public static Thread io_thread = null;
+        //public static Thread io_thread = null;
 
         //Sends event to those subscribed.
         protected virtual void OnChanged(APIEventArgs e)
@@ -52,7 +52,7 @@ namespace GeneticAPI
         /// <param name="ai_ts_contestants">Number of Contestants for Tournament Selector.</param>
         /// <param name="ab_adaptivemut">Adaptive Mutation Enabler.</param>
         /// <param name="ab_rog">ROG Enabler.</param>
-        /// <param name="ab_srog">SROG Enabler.</param>
+        /// <param name="ab_lrog">LROG Enabler.</param>
         public void Execute
             (
                 List<T> ao_data, 
@@ -67,7 +67,7 @@ namespace GeneticAPI
                 int ai_ts_contestants = 2,
                 bool ab_adaptivemut = true,
                 bool ab_rog = false,
-                bool ab_srog = true
+                bool ab_lrog = true
             )
         { 
             //Initialize global variables.
@@ -80,7 +80,7 @@ namespace GeneticAPI
             Globals<T>.ELITENUM = ai_elites;
             Globals<T>.ADAPTMUT = ab_adaptivemut;
             Globals<T>.ROG = ab_rog;
-            Globals<T>.SROG = ab_srog;
+            Globals<T>.LROG = ab_lrog;
 
             if (aen_random == Randoms.Basic)
             {
@@ -100,13 +100,21 @@ namespace GeneticAPI
             double ld_inifitness = 0;
             int li_generation = 0;
 
-            //Start SROG thread if it's active.
-            if (Globals<T>.SROG && io_thread == null)
+            //Start LROG thread if it's active.
+            //if (Globals<T>.LROG && io_thread == null)
+            //{
+            //    Globals<T>.CPQ = new ConcurrentPriorityQueue<Chromosome<T>>(100);
+            //    LessROG<T> lo_seeder = new LessROG<T>(ref Globals<T>.CPQ);
+            //    io_thread = new Thread(new ThreadStart(lo_seeder.Run));
+            //    io_thread.Start();
+            //}
+
+            if (Globals<T>.LROG && Globals<T>.SROGTHREAD == null)
             {
                 Globals<T>.CPQ = new ConcurrentPriorityQueue<Chromosome<T>>(100);
-                SuperROG<T> lo_seeder = new SuperROG<T>(ref Globals<T>.CPQ);
-                io_thread = new Thread(new ThreadStart(lo_seeder.Run));
-                io_thread.Start();
+                LessROG<T> lo_seeder = new LessROG<T>(ref Globals<T>.CPQ);
+                Globals<T>.SROGTHREAD = new Thread(new ThreadStart(lo_seeder.Run));
+                Globals<T>.SROGTHREAD.Start();
             }
 
 

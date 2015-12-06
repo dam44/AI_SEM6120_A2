@@ -28,7 +28,7 @@ namespace TSPGenGUI
 
         public bool ib_adaptivemut { get; }
         public bool ib_rog {get;}
-        public bool ib_srog { get; }
+        public bool ib_lrog { get; }
 
         public GARun(
                 int ai_recpergen,
@@ -44,7 +44,7 @@ namespace TSPGenGUI
                 int ai_ts_contestants = 2,
                 bool ab_adaptivemut = true,
                 bool ab_rog = false,
-                bool ab_srog = true
+                bool ab_lrog = true
             )
         {
             ii_recpergen = ai_recpergen;
@@ -60,7 +60,7 @@ namespace TSPGenGUI
             ii_ts_contestants = ai_ts_contestants;
             ib_adaptivemut = ab_adaptivemut;
             ib_rog = ab_rog;
-            ib_srog = ab_srog;
+            ib_lrog = ab_lrog;
             id = id + 1;
             myid = id;
         }

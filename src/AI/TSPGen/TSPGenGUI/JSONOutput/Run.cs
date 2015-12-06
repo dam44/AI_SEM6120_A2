@@ -59,7 +59,7 @@ namespace TSPGenGUI.JSONOutput
             contestants = ao_run.ii_ts_contestants;
             adaptivemut = ao_run.ib_adaptivemut;
             rog = ao_run.ib_rog;
-            srog = ao_run.ib_srog;
+            srog = ao_run.ib_lrog;
             runtime = ats_runtime.ToString();
 
         }
