@@ -13,14 +13,14 @@ namespace GeneticAPI.Shared
     /// </summary>
     public class AdvRandom : GARandom
     {
-        public int Next(int max)
+        public int Next(int ai_max)
         {
-            return NextRand(0, max);
+            return NextRand(0, ai_max);
         }
 
-        public int Next(int min, int max)
+        public int Next(int ai_min, int ai_max)
         {
-            return NextRand(min, max);
+            return NextRand(ai_min, ai_max);
         }
 
 
